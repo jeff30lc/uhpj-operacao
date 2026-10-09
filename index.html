@@ -630,6 +630,26 @@ dd { color: #333; line-height: 1.6; }
 }
 
 </style>
+  <style>
+.regime-controls{display:grid;grid-template-columns:1fr 1fr 1fr;gap:22px;padding:18px;margin-bottom:16px;align-items:start}
+.regime-controls label{display:block;font-size:12px;margin-bottom:7px}.regime-controls label span{float:right;font-size:11px;color:#444}
+.regime-controls input{width:100%;height:36px;min-width:0}.regime-controls small{display:block;margin-top:7px;font-size:10px;color:#444}
+.regime-level-shortcuts{display:flex;gap:6px;flex-wrap:wrap;margin-top:12px}.regime-level-shortcuts button{font-size:10px;padding:4px 8px}
+.regime-reading-source{border-left:1px solid #808080;padding-left:20px}.regime-reading-source p{font-size:11px;line-height:1.7;margin:9px 0 0;color:#333}
+.regime-result{display:flex;align-items:center;gap:15px;padding:15px 18px;border:2px solid;border-color:#fff #808080 #808080 #fff;background:#dfdfdf;margin-bottom:9px}
+.regime-status-mark{width:20px;height:42px;border:1px solid #555;background:#b0b0b0;flex-shrink:0}.regime-result.normal .regime-status-mark{background:#008000}.regime-result.attention .regime-status-mark{background:#ffff00}.regime-result.alert .regime-status-mark{background:#ff9800}.regime-result.emergency .regime-status-mark{background:#f00000}
+.regime-result-label{display:block;font-size:9px;letter-spacing:.5px;color:#444}.regime-result strong{display:block;font-size:24px;line-height:1.25;margin-top:3px}.regime-result p{font-size:11px;line-height:1.6;margin:5px 0 0}.regime-result>div:nth-child(2){flex:1}.regime-point-values{font-size:11px;line-height:1.9;text-align:right;flex-shrink:0}.regime-point-values span{display:block}
+.regime-level-condition{font-size:11px;margin:0 2px 20px;color:#333}.regime-level-condition.outside-operating{color:#8a3d00;font-weight:700}
+.regime-graph-panel{margin-bottom:20px}.regime-legend{display:flex;flex-wrap:wrap;gap:9px 20px;padding:14px 18px 4px;font-size:11px}.regime-legend span{display:flex;align-items:center;gap:6px}.regime-legend i{display:block;width:19px;height:12px;border:1px solid #555}.regime-legend .regime-point-swatch{width:12px;height:12px;border:3px solid #000;outline:1px solid #fff;background:#fff}
+.regime-chart{overflow-x:auto;margin:12px 14px 0;background:#fff;border:2px solid;border-color:#808080 #fff #fff #808080}.regime-chart svg{display:block;width:100%;min-width:720px;height:auto;stroke:none}.regime-chart text{font:11px Tahoma,Arial,sans-serif;fill:#000;stroke:none}.regime-chart .regime-area-label{font-size:13px;font-weight:700}.regime-chart .regime-reference-label{font-size:10px;font-weight:700;fill:#000080}.regime-chart .regime-axis-title{font-size:12px;font-weight:700}.regime-chart .regime-grid{stroke:#000;stroke-opacity:.35;stroke-width:.7}.regime-chart .regime-reference-line{stroke:#000080;stroke-width:1.6}.regime-chart .regime-crosshair{stroke:#000;stroke-width:1.1;stroke-dasharray:5 4}
+.regime-chart-footer{display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;padding:11px 16px;font-size:10px;color:#333}.regime-boundary-note{padding:0 16px 13px;font-size:10px;color:#444;line-height:1.7;margin:0}
+.regime-chart .on-dark{fill:#fff;paint-order:stroke;stroke:#000;stroke-width:2px;stroke-linejoin:round}
+.regime-levels-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px}.regime-level-table-wrap{padding:14px}.regime-level-table{min-width:0;font-size:12px}.regime-level-table td,.regime-level-table th{padding:9px 12px;white-space:normal}.regime-level-table td:last-child{text-align:right;white-space:nowrap;font-weight:700}.regime-level-table td:first-child{font-weight:400}
+@media(max-width:1000px){.regime-controls{grid-template-columns:1fr 1fr;gap:16px}.regime-reading-source{grid-column:1/-1;border-left:0;border-top:1px solid #808080;padding:13px 0 0}.regime-result{flex-wrap:wrap}.regime-point-values{text-align:left;flex-basis:100%;padding-left:35px}}
+@media(max-width:760px){.regime-controls{padding:13px;gap:15px}.regime-controls label{font-size:11px}.regime-levels-grid{grid-template-columns:1fr}.regime-result{padding:12px}.regime-result strong{font-size:21px}.regime-legend{padding:12px 12px 0;gap:8px 12px}.regime-chart{margin:10px 8px 0}.regime-level-table-wrap{padding:10px}.regime-chart-footer{padding:10px 12px}#formTab{grid-column:1/-1}}
+@media(max-width:420px){.regime-controls{grid-template-columns:1fr}.regime-reading-source{grid-column:auto}.regime-point-values{padding-left:0}.regime-level-shortcuts button{flex:1}}
+
+</style>
 </head>
 <body>
   <div class="retro-window">
@@ -646,6 +666,7 @@ dd { color: #333; line-height: 1.6; }
     <button class="nav-item active" id="generationNav" aria-current="page"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 19V5m0 14h16M8 14l4-5 4 3 4-7"/></svg><span>Faixas de operação</span></button>
     <button class="nav-item" id="turbineNav"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 19V5m0 14h16M7 15l4-4 4-2 5-3"/></svg><span>Vazão turbinada</span></button>
     <button class="nav-item" id="spillwayNav"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h16M7 5v8m5-8v8m5-8v8M3 17q3-3 6 0t6 0 6 0M3 21q3-3 6 0t6 0 6 0"/></svg><span>Vazão vertida</span></button>
+    <button class="nav-item" id="regimeNav"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 20h18M4 4v14h16V4M4 10q4-3 8 0t8 0M8 14h8"/></svg><span>Reservatório</span></button>
     <button class="nav-item" id="reservoirNav"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5v15h16V5M4 12q4-3 8 0t8 0M8 3h8"/></svg><span>Cota × Volume</span></button>
     <button class="nav-item" id="tailraceNav"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5v14h16V5M4 12q4-3 8 0t8 0M7 21h10M9 8h6m-2-2 2 2-2 2"/></svg><span>Canal de fuga</span></button>
     <button class="nav-item" id="formNav"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4H4v17h16V4h-3M8 3h8v4H8ZM8 11h8M8 15h8"/></svg><span>Balanço Hídrico</span></button>
@@ -655,7 +676,7 @@ dd { color: #333; line-height: 1.6; }
   <div class="workspace">
     <header class="topbar"><span>Usina hidrelétrica <span class="topbar-divider">/</span> <strong id="headerView">Consulta de operação</strong></span><span class="base-tag" id="headerBase"><span></span>Planilha REV 3</span></header>
     <main id="main">
-      <nav class="mobile-view-tabs" aria-label="Tipo de consulta"><button id="generationTab" class="active" aria-pressed="true">Faixas</button><button id="turbineTab" aria-pressed="false">Turbinada</button><button id="spillwayTab" aria-pressed="false">Vertida</button><button id="reservoirTab" aria-pressed="false">Reservatório</button><button id="tailraceTab" aria-pressed="false">Canal de fuga</button><button id="formTab" aria-pressed="false">Balanço Hídrico</button></nav>
+      <nav class="mobile-view-tabs" aria-label="Tipo de consulta"><button id="generationTab" class="active" aria-pressed="true">Faixas</button><button id="turbineTab" aria-pressed="false">Turbinada</button><button id="spillwayTab" aria-pressed="false">Vertida</button><button id="regimeTab" aria-pressed="false">Reservatório</button><button id="reservoirTab" aria-pressed="false">Cota × Volume</button><button id="tailraceTab" aria-pressed="false">Canal de fuga</button><button id="formTab" aria-pressed="false">Balanço Hídrico</button></nav>
       <section id="formReadingReminder" class="form-reading-reminder" role="status" aria-live="polite" hidden>
         <div><strong id="formReminderTitle"></strong><p id="formReminderSummary"></p><small id="formReminderNext"></small></div>
         <div class="form-reading-actions"><button type="button" id="formFillPending">Preencher leitura</button><button type="button" id="formViewPending">Ver pendências</button></div>
@@ -712,6 +733,19 @@ dd { color: #333; line-height: 1.6; }
         <section class="result-grid turbine-results" aria-live="polite" aria-atomic="true"><article class="metric metric-flow"><div class="metric-label">VAZÃO TURBINADA TOTAL <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7q3-3 6 0t6 0 6 0M3 12q3-3 6 0t6 0 6 0M3 17q3-3 6 0t6 0 6 0"/></svg></div><div class="metric-value"><span id="turbineTotal">—</span><span class="unit">m³/s</span></div><p id="turbineTotalContext"></p></article><article class="metric"><div class="metric-label">CARGA SELECIONADA TOTAL</div><div class="metric-value"><span id="turbineCombinedLoad">—</span><span class="unit">MW</span></div><p id="turbineCombinedLoadContext"></p></article><article class="metric"><div class="metric-label">ORIGEM DOS VALORES</div><div class="metric-value"><span id="turbineSourcePage">—</span></div><p id="turbineSourceContext"></p></article></section>
         <section class="panel table-panel turbine-table"><div class="panel-heading"><div><h2>Cargas e vazões por unidade</h2><p id="turbineTableSubtitle"></p></div><span class="legend">Tabela do PDF</span></div><div class="table-scroll"><table><thead><tr><th scope="col">Carga <span>MW</span></th><th scope="col">Vazão turbinada <span>m³/s por UG</span></th><th scope="col">Condição no PDF</th><th scope="col">Origem</th><th scope="col"><span class="sr-only">Selecionar carga para unidade geradora</span></th></tr></thead><tbody id="turbineTableBody"></tbody></table></div><div class="turbine-criteria">* Unidade Geradora operando fora da faixa operativa permitida, conforme a nota do PDF. Essas combinações não possuem vazão informada. Consulta exata dos pontos tabelados.</div><div class="table-footer"><span id="turbineTableCount"></span><span>MOR-VII-S2-A03 · versão 00 · 12/04/2011</span></div></section>
         <footer class="page-footer"><span>Vazão turbinada por unidade · QB em metros · carga em MW · vazão em m³/s</span><button type="button" id="turbineSourceFooter">Ver origem e critérios <span aria-hidden="true">↗</span></button></footer>
+      </section>
+      <section id="regimeView" hidden aria-label="Reservatório e regimes de operação">
+        <div class="page-heading"><div><p class="eyebrow">NÍVEIS E REGIMES · UHPJ</p><h1>Reservatório.</h1><p class="intro">Consulte o regime de operação pelo nível de montante e pela afluência de referência.</p></div></div>
+        <section class="panel regime-controls" aria-label="Consulta do regime de operação">
+          <div><label for="regimeLevel">Nível de montante <span>m</span></label><input type="text" inputmode="decimal" id="regimeLevel" value="127,35" aria-describedby="regimeLevelHint"><small id="regimeLevelHint">Digite 12735 → 127,35 m</small><div class="regime-level-shortcuts"><button type="button" id="regimeMin">Mínimo · 127,35 m</button><button type="button" id="regimeMax">Máximo · 128,35 m</button></div></div>
+          <div><label for="regimeFlow">Afluência de referência <span>m³/s</span></label><input type="text" inputmode="decimal" id="regimeFlow" placeholder="Ex.: 1500,00" aria-describedby="regimeFlowHint"><small id="regimeFlowHint">Afl. Ref. · média das últimas 4h. Use vírgula para decimais.</small></div>
+          <div class="regime-reading-source"><button type="button" id="regimeUseLatest">Usar última leitura salva</button><p id="regimeLatestStatus" role="status"></p></div>
+        </section>
+        <div class="regime-result" id="regimeResult" role="status" aria-live="polite"><span class="regime-status-mark" aria-hidden="true"></span><div><span class="regime-result-label">REGIME CONFORME A FIGURA</span><strong id="regimeStatus"></strong><p id="regimeReason"></p></div><div class="regime-point-values"><span id="regimePointLevel"></span><span id="regimePointFlow"></span></div></div>
+        <p id="regimeLevelCondition" class="regime-level-condition"></p>
+        <section class="panel regime-graph-panel"><div class="panel-heading"><div><h2>Regimes de operação do reservatório</h2><p id="regimeChartSubtitle">Nível de montante × vazão afluente de referência</p></div><span class="legend">Figura 2 · informação fornecida</span></div><div class="regime-legend" id="regimeLegend"></div><div class="regime-chart" id="regimeChart"></div><div class="regime-chart-footer"><span>Limites de afluência: 1.500 · 2.500 · 4.500 m³/s</span><span>Acima de 128,35 m: faixa de emergência</span></div><p class="regime-boundary-note">Nos limites entre faixas de afluência, considera-se o regime de maior severidade. O nível mínimo operativo é uma referência separada da classificação por cores.</p></section>
+        <div class="regime-levels-grid"><section class="panel"><div class="panel-heading"><div><h2>Níveis de montante</h2><p>Reservatório · valores informados</p></div></div><div class="regime-level-table-wrap"><table class="regime-level-table"><thead><tr><th>Referência</th><th>Nível <span>m</span></th></tr></thead><tbody id="regimeMontanteTable"></tbody></table></div></section><section class="panel"><div class="panel-heading"><div><h2>Níveis de jusante</h2><p>Referências do documento</p></div></div><div class="regime-level-table-wrap"><table class="regime-level-table"><thead><tr><th>Referência</th><th>Nível <span>m</span></th></tr></thead><tbody id="regimeJusanteTable"></tbody></table></div><p class="regime-boundary-note">O regime desta figura usa o nível de montante e a afluência de referência.</p></section></div>
+        <footer class="page-footer"><span>Item 4.2 · Reservatório · tabela de níveis e Figura 2 fornecidas pelo operador</span><button type="button" id="regimeSourceFooter">Ver origem e critérios ↗</button></footer>
       </section>
       <section id="reservoirView" hidden aria-label="Consulta de cota e volume do reservatório">
         <div class="page-heading"><div><p class="eyebrow">RESERVATÓRIO · UHPJ</p><h1>Cota × Volume.</h1><p class="intro">Selecione a cota do reservatório para consultar os volumes e o percentual útil.</p></div><button type="button" class="export-button" id="reservoirExport"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12m-4-4 4 4 4-4M5 16v5h14v-5"/></svg>Exportar consulta</button></div>
@@ -1966,10 +2000,136 @@ window.UHPJ_FORM_DATA={
 })();
 
 </script>
+  <dialog id="regimeSourceDialog"><div class="dialog-heading"><div><p class="eyebrow">RESERVATÓRIO · ITEM 4.2</p><h2>Origem e critérios</h2></div><button type="button" id="closeRegimeSource" class="close-button" aria-label="Fechar critérios do reservatório">×</button></div><p class="source-name">Tabela de níveis e Figura 2 fornecidas pelo operador</p><dl><dt>Níveis</dt><dd>Montante: mínimo 127,35 m; máximo 128,35 m; Máximo Maximorum 128,35 m; coroamento da barragem 131,50 m. Jusante: normal 99,30 m; máximo 113,36 m; mínimo 97,72 m. Máximo e Máximo Maximorum foram mantidos com o mesmo valor, conforme a tabela recebida.</dd><dt>Regimes da Figura 2</dt><dd>Verde: Normal; amarelo: Atenção; laranja: Alerta; vermelho: Emergência. Para níveis até 128,35 m: Normal abaixo de 1.500 m³/s; Atenção de 1.500 a menos de 2.500 m³/s; Alerta de 2.500 a menos de 4.500 m³/s; Emergência a partir de 4.500 m³/s. Acima de 128,35 m, a área colorida é de Emergência. Nos limites entre faixas de afluência, adota-se a maior severidade. Na linha de 128,35 m, mantém-se a regra da faixa inferior, como no Balanço Hídrico.</dd><dt>Domínio do gráfico</dt><dd>O eixo horizontal vai de 0 a 12.000 m³/s e o vertical de 122,00 a 132,00 m. A área colorida de classificação vai de 122,00 a 131,50 m. Pontos fora desse domínio são identificados como fora da figura. A região verde desenhada abaixo de 127,35 m não altera o nível mínimo operativo informado, que é sinalizado separadamente.</dd><dt>Afluência de referência</dt><dd>Afl. Ref. é a média das últimas quatro afluências horárias consecutivas, conforme o critério do Balanço Hídrico. A consulta permite informar a vazão manualmente ou copiar o nível e a Afl. Ref. da última leitura salva neste navegador. Quando a referência ainda não pode ser calculada, o campo permanece vazio. Para níveis acima de 128,35 m, o nível já determina a faixa de emergência, mesmo sem Afl. Ref.</dd><dt>Consulta</dt><dd>Os valores digitados apenas localizam o ponto no gráfico; não alteram as leituras salvas. O nível de jusante é exibido na tabela de referências. A classificação desta figura usa o nível de montante e a afluência de referência.</dd></dl><button type="button" id="closeRegimeSourceBottom" class="primary-button">Voltar ao reservatório</button></dialog>
+  <script>
+(() => {
+  'use strict';
+  const levels={
+    montante:[{label:'Mínimo',value:127.35},{label:'Máximo',value:128.35},{label:'Máximo Maximorum',value:128.35},{label:'Coroamento da barragem',value:131.5}],
+    jusante:[{label:'Normal',value:99.3},{label:'Máximo',value:113.36},{label:'Mínimo',value:97.72}]
+  };
+  const chart={minFlow:0,maxFlow:12000,minLevel:122,maxLevel:132,maxColoredLevel:131.5};
+  const states=[{code:'normal',label:'Normal',color:'#008000'},{code:'attention',label:'Atenção',color:'#ffff00'},{code:'alert',label:'Alerta',color:'#ff9800'},{code:'emergency',label:'Emergência',color:'#f00000'}];
+  function regions(data){
+    const h=data.hydraulic;
+    return [
+      {code:'normal',x0:0,x1:h.attentionFlow,y0:h.minChartLevel,y1:h.maxNormal},
+      {code:'attention',x0:h.attentionFlow,x1:h.alertFlow,y0:h.minChartLevel,y1:h.maxNormal},
+      {code:'alert',x0:h.alertFlow,x1:h.emergencyFlow,y0:h.minChartLevel,y1:h.maxNormal},
+      {code:'emergency',x0:h.emergencyFlow,x1:chart.maxFlow,y0:h.minChartLevel,y1:h.maxNormal},
+      {code:'emergency',x0:0,x1:chart.maxFlow,y0:h.maxNormal,y1:h.maxChartLevel}
+    ];
+  }
+  function classify(level,flow,data){
+    if(!Number.isFinite(level))return {code:'unknown',label:'Informe o nível',reason:'Preencha o nível de montante para consultar o regime.'};
+    if(level<chart.minLevel||level>chart.maxColoredLevel)return {code:'unknown',label:'Fora da figura',reason:'O domínio colorido de nível vai de 122,00 a 131,50 m.'};
+    if(Number.isFinite(flow)&&(flow<0||flow>chart.maxFlow))return {code:'unknown',label:'Fora da figura',reason:'O eixo de afluência de referência vai de 0 a 12.000 m³/s.'};
+    const result=window.UHPJFormModel.hydraulic(level,flow,data);
+    const reason=result.code==='normal'?'Nível até 128,35 m e Afl. Ref. abaixo de 1.500 m³/s.':result.code==='attention'?'Nível até 128,35 m e Afl. Ref. de 1.500 a menos de 2.500 m³/s.':result.code==='alert'?'Nível até 128,35 m e Afl. Ref. de 2.500 a menos de 4.500 m³/s.':result.code==='emergency'?(level>data.hydraulic.maxNormal?'Nível acima de 128,35 m, na faixa vermelha da figura.':'Afl. Ref. a partir de 4.500 m³/s, na faixa vermelha da figura.'):'Informe a afluência de referência para localizar o ponto.';
+    return {...result,label:result.code==='unknown'?'Informe a Afl. Ref.':result.label,reason};
+  }
+  const containsPoint=(level,flow)=>Number.isFinite(level)&&Number.isFinite(flow)&&level>=chart.minLevel&&level<=chart.maxLevel&&flow>=chart.minFlow&&flow<=chart.maxFlow;
+  window.UHPJRegimeModel={levels,chart,states,regions,classify,containsPoint};
+})();
+
+</script>
+  <script>
+(() => {
+  'use strict';
+  const $=id=>document.getElementById(id),model=window.UHPJRegimeModel,data=window.UHPJ_FORM_DATA,form=window.UHPJFormModel;
+  const bases={spillway:window.UHPJ_SPILLWAY_DATA,turbine:window.UHPJ_TURBINE_DATA,reservoir:window.UHPJ_RESERVOIR_DATA,tailrace:window.UHPJ_TAILRACE_DATA};
+  const finite=Number.isFinite,number=(v,d=2)=>finite(v)?v.toLocaleString('pt-BR',{minimumFractionDigits:d,maximumFractionDigits:d}):'—';
+  const stamp=hour=>`${hour.slice(8,10)}/${hour.slice(5,7)}/${hour.slice(0,4)} ${hour.slice(11,16)}`;
+  const escape=value=>String(value).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  let latest=null;
+  function parseFlow(value){
+    const text=value.trim();
+    if(/^-?\d{1,3}(?:\.\d{3})+(?:,\d+)?$/.test(text))return Number(text.replace(/\./g,'').replace(',','.'));
+    return /^-?\d+(?:[.,]\d+)?$/.test(text)?Number(text.replace(',','.')):null;
+  }
+  function levelValue(){const text=$('regimeLevel').value;return /^\d+,\d{2}$/.test(text)?Number(text.replace(',','.')):null;}
+  function maskLevel(){
+    const field=$('regimeLevel'),raw=field.value,cursor=field.selectionStart??raw.length,rightDigits=raw.slice(cursor).replace(/\D/g,'').length;
+    if(!/^[\d.,\s]*$/.test(raw)){field.setCustomValidity('Informe somente números.');render();return;}
+    const digits=raw.replace(/\D/g,'').replace(/^0+(?=\d)/,'');
+    if(!digits){field.value='';field.setCustomValidity('');render();return;}
+    const padded=digits.padStart(3,'0');field.value=padded.slice(0,-2)+','+padded.slice(-2);
+    let position=field.value.length;
+    for(let seen=0;position>0&&seen<rightDigits;position--)if(/\d/.test(field.value[position-1]))seen++;
+    field.setSelectionRange(position,position);field.setCustomValidity('');render();
+  }
+  $('regimeLevel').addEventListener('input',maskLevel);
+  $('regimeLevel').addEventListener('beforeinput',event=>{
+    const field=event.target,start=field.selectionStart,end=field.selectionEnd,back=event.inputType==='deleteContentBackward',forward=event.inputType==='deleteContentForward';
+    if(start!==end||(!back&&!forward))return;
+    if(back&&field.value[start-1]===','||forward&&field.value[start]===','){
+      event.preventDefault();const index=back?start-2:start+1;
+      if(index>=0&&index<field.value.length){field.setRangeText('',index,index+1,'start');field.dispatchEvent(new Event('input',{bubbles:true}));}
+    }
+  });
+  $('regimeFlow').addEventListener('input',render);
+  for(const [id,value] of [['regimeMin',127.35],['regimeMax',128.35]])$(id).addEventListener('click',()=>{$('regimeLevel').value=value.toFixed(2).replace('.',',');$('regimeLevel').setCustomValidity('');render();});
+  for(const [id,rows] of [['regimeMontanteTable',model.levels.montante],['regimeJusanteTable',model.levels.jusante]])$(id).innerHTML=rows.map(row=>`<tr><td>${row.label}</td><td>${number(row.value)} m</td></tr>`).join('');
+  $('regimeLegend').innerHTML=model.states.map(item=>`<span><i style="background:${item.color}"></i>${item.label}</span>`).join('')+'<span><i class="regime-point-swatch"></i>Ponto consultado</span>';
+  function refreshLatest(){
+    latest=null;
+    try{
+      const saved=localStorage.getItem('uhpj.hourly-readings.v1'),records=saved?form.decodeBackup(JSON.parse(saved)):[];
+      latest=form.derive(records.slice(-5),bases,data).at(-1)||null;
+      $('regimeUseLatest').disabled=!latest;
+      $('regimeLatestStatus').textContent=latest?`Leitura salva: ${stamp(latest.input.hour)}. ${finite(latest.reference)?'Nível e Afl. Ref. disponíveis.':'Afl. Ref. indisponível; informe a vazão manualmente.'}`:'Nenhuma leitura salva. Informe os valores para consultar o gráfico.';
+    }catch(error){$('regimeUseLatest').disabled=true;$('regimeLatestStatus').textContent='Leitura não carregada: '+error.message;}
+  }
+  $('regimeUseLatest').addEventListener('click',()=>{
+    refreshLatest();if(!latest)return;
+    $('regimeLevel').value=latest.input.montante.toFixed(2).replace('.',',');$('regimeLevel').setCustomValidity('');
+    $('regimeFlow').value=finite(latest.reference)?String(latest.reference).replace('.',','):'';
+    render();
+  });
+  ['regimeNav','regimeTab'].forEach(id=>$(id).addEventListener('click',refreshLatest));
+  window.addEventListener('storage',event=>{if(event.key==='uhpj.hourly-readings.v1')refreshLatest();});
+  function render(){
+    const level=levelValue(),flow=parseFlow($('regimeFlow').value),result=model.classify(level,flow,data);
+    $('regimeResult').className='regime-result '+result.code;
+    $('regimeStatus').textContent=result.label;$('regimeReason').textContent=result.reason;
+    $('regimePointLevel').textContent='Montante: '+number(level)+' m';$('regimePointFlow').textContent='Afl. Ref.: '+number(flow)+' m³/s';
+    const outside=finite(level)&&(level<127.35||level>128.35);
+    $('regimeLevelCondition').className='regime-level-condition'+(outside?' outside-operating':'');
+    $('regimeLevelCondition').textContent=!finite(level)?'Referências de montante: mínimo 127,35 m · máximo 128,35 m.':level<127.35?'Nível abaixo do mínimo de montante de 127,35 m.':level===127.35?'Nível mínimo de montante: 127,35 m.':level<128.35?'Nível entre o mínimo de 127,35 m e o máximo de 128,35 m.':level===128.35?'Nível máximo e Máximo Maximorum informados: 128,35 m.':level<131.5?'Nível acima do máximo e Máximo Maximorum de 128,35 m.':level===131.5?'Nível do coroamento da barragem: 131,50 m.':'Nível acima do coroamento da barragem de 131,50 m; fora do domínio colorido da figura.';
+    $('regimeChartSubtitle').textContent=model.containsPoint(level,flow)?`Ponto consultado: montante ${number(level)} m · Afl. Ref. ${number(flow)} m³/s`:'Informe nível e Afl. Ref. dentro dos eixos para marcar o ponto consultado.';
+    renderChart(level,flow,result);
+  }
+  function renderChart(level,flow,result){
+    const w=1040,h=640,l=100,r=28,t=26,b=90,pw=w-l-r,ph=h-t-b,c=model.chart;
+    const x=value=>l+(value-c.minFlow)/(c.maxFlow-c.minFlow)*pw,y=value=>t+(c.maxLevel-value)/(c.maxLevel-c.minLevel)*ph;
+    const defs='<defs><pattern id="regimePlotHatch" width="12" height="12" patternUnits="userSpaceOnUse"><path d="M-3 3L3 -3M0 12L12 0M9 15L15 9" fill="none" stroke="#000" stroke-width=".7" opacity=".35"/></pattern></defs>';
+    const areas=model.regions(data).map(area=>{
+      const color=model.states.find(item=>item.code===area.code).color,rect=`x="${x(area.x0)}" y="${y(area.y1)}" width="${x(area.x1)-x(area.x0)}" height="${y(area.y0)-y(area.y1)}"`;
+      return `<rect ${rect} fill="${color}"/>${area.code==='normal'?'':`<rect ${rect} fill="url(#regimePlotHatch)"/>`}`;
+    }).join('');
+    let grid='',ticks='';
+    for(let value=0;value<=12000;value+=250)grid+=`<line class="regime-grid" x1="${x(value)}" x2="${x(value)}" y1="${t}" y2="${h-b}"/>`;
+    for(let value=122;value<=132;value+=.5)grid+=`<line class="regime-grid" x1="${l}" x2="${w-r}" y1="${y(value)}" y2="${y(value)}"/>`;
+    for(const value of [127.35,128.35])grid+=`<line class="regime-reference-line" x1="${l}" x2="${w-r}" y1="${y(value)}" y2="${y(value)}"/>`;
+    const special=[1500,2500,4500];
+    for(const value of special)grid+=`<line x1="${x(value)}" x2="${x(value)}" y1="${y(128.35)}" y2="${h-b}" stroke="#000" stroke-width="1.5"/>`;
+    for(const value of [122,123,124,125,126,127,127.35,128,128.35,129,130,131,131.5,132])ticks+=`<text x="${l-10}" y="${y(value)+4}" text-anchor="end" class="${value===127.35||value===128.35?'regime-reference-label':''}">${number(value)}</text>`;
+    for(let value=0;value<=12000;value+=1000)ticks+=`<text x="${x(value)}" y="${h-b+22}" text-anchor="middle">${number(value,0)}</text>`;
+    for(const value of special)ticks+=`<text x="${x(value)}" y="${h-b+39}" text-anchor="middle" class="regime-reference-label">${number(value,0)}</text>`;
+    const names=`<text class="regime-area-label on-dark" x="${x(750)}" y="${y(124.9)}" text-anchor="middle">NORMAL</text><text class="regime-area-label" x="${x(2000)}" y="${y(124.9)}" text-anchor="middle" transform="rotate(-90 ${x(2000)} ${y(124.9)})">ATENÇÃO</text><text class="regime-area-label" x="${x(3500)}" y="${y(124.9)}" text-anchor="middle">ALERTA</text><text class="regime-area-label on-dark" x="${x(8250)}" y="${y(124.9)}" text-anchor="middle">EMERGÊNCIA</text><text class="regime-area-label on-dark" x="${x(6000)}" y="${y(129.9)}" text-anchor="middle">EMERGÊNCIA · Nível acima de 128,35 m</text><text x="${x(6000)}" y="${y(131.75)+4}" text-anchor="middle">Fora do domínio colorido da figura</text>`;
+    const marker=model.containsPoint(level,flow)?`<g><line class="regime-crosshair" x1="${l}" x2="${x(flow)}" y1="${y(level)}" y2="${y(level)}"/><line class="regime-crosshair" x1="${x(flow)}" x2="${x(flow)}" y1="${y(level)}" y2="${h-b}"/><circle id="regimeSelectedPoint" cx="${x(flow)}" cy="${y(level)}" r="8" fill="#000" stroke="#fff" stroke-width="3"/><circle cx="${x(flow)}" cy="${y(level)}" r="2" fill="#fff"/><title>Montante ${number(level)} m; Afl. Ref. ${number(flow)} m³/s; ${escape(result.label)}</title></g>`:'';
+    $('regimeChart').innerHTML=`<svg viewBox="0 0 ${w} ${h}" role="img" aria-label="Regimes de operação do reservatório. Eixo horizontal: afluência de referência de 0 a 12 mil metros cúbicos por segundo. Eixo vertical: nível de 122 a 132 metros. ${escape(result.label)}.">${defs}<rect x="${l}" y="${t}" width="${pw}" height="${ph}" fill="#fff"/>${areas}${grid}<rect x="${l}" y="${t}" width="${pw}" height="${ph}" fill="none" stroke="#000" stroke-width="2"/>${ticks}${names}${marker}<text class="regime-axis-title" x="${l+pw/2}" y="${h-16}" text-anchor="middle">VAZÃO AFLUENTE DE REFERÊNCIA (m³/s)</text><text class="regime-axis-title" transform="translate(22 ${t+ph/2}) rotate(-90)" text-anchor="middle">NÍVEL DE ÁGUA NO RESERVATÓRIO (m)</text></svg>`;
+  }
+  $('regimeSourceFooter').addEventListener('click',()=>$('regimeSourceDialog').showModal());
+  ['closeRegimeSource','closeRegimeSourceBottom'].forEach(id=>$(id).addEventListener('click',()=>$('regimeSourceDialog').close()));
+  refreshLatest();render();
+})();
+
+</script>
   <script>
 (() => {
   const $=id=>document.getElementById(id);
-  const views={generation:{panel:'generationView',nav:'generationNav',tab:'generationTab',hash:'#geracao',title:'Faixas de operação',base:'Planilha REV 3',dialog:'sourceDialog',source:'Dados da planilha'},turbine:{panel:'turbineView',nav:'turbineNav',tab:'turbineTab',hash:'#turbinas',title:'Vazão turbinada',base:'PDF · turbinas',dialog:'turbineSourceDialog',source:'Dados do PDF'},spillway:{panel:'spillwayView',nav:'spillwayNav',tab:'spillwayTab',hash:'#vertedouros',title:'Vazão vertida',base:'PDF · segmento',dialog:'spillwaySourceDialog',source:'Dados do PDF'},reservoir:{panel:'reservoirView',nav:'reservoirNav',tab:'reservoirTab',hash:'#cota-volume',title:'Cota × Volume',base:'PDF · reservatório',dialog:'reservoirSourceDialog',source:'Dados do PDF'},tailrace:{panel:'tailraceView',nav:'tailraceNav',tab:'tailraceTab',hash:'#canal-fuga',title:'Descarga do Canal de Fuga',base:'PDF · canal de fuga',dialog:'tailraceSourceDialog',source:'Dados do PDF'},form:{panel:'formView',nav:'formNav',tab:'formTab',hash:'#formulario',title:'Balanço Hídrico',base:'Balanço hídrico · 1h',dialog:'formSourceDialog',source:'Critérios do Balanço Hídrico'}};
+  const views={generation:{panel:'generationView',nav:'generationNav',tab:'generationTab',hash:'#geracao',title:'Faixas de operação',base:'Planilha REV 3',dialog:'sourceDialog',source:'Dados da planilha'},turbine:{panel:'turbineView',nav:'turbineNav',tab:'turbineTab',hash:'#turbinas',title:'Vazão turbinada',base:'PDF · turbinas',dialog:'turbineSourceDialog',source:'Dados do PDF'},spillway:{panel:'spillwayView',nav:'spillwayNav',tab:'spillwayTab',hash:'#vertedouros',title:'Vazão vertida',base:'PDF · segmento',dialog:'spillwaySourceDialog',source:'Dados do PDF'},regime:{panel:'regimeView',nav:'regimeNav',tab:'regimeTab',hash:'#reservatorio',title:'Reservatório',base:'Níveis e regimes',dialog:'regimeSourceDialog',source:'Dados do reservatório'},reservoir:{panel:'reservoirView',nav:'reservoirNav',tab:'reservoirTab',hash:'#cota-volume',title:'Cota × Volume',base:'PDF · reservatório',dialog:'reservoirSourceDialog',source:'Dados do PDF'},tailrace:{panel:'tailraceView',nav:'tailraceNav',tab:'tailraceTab',hash:'#canal-fuga',title:'Descarga do Canal de Fuga',base:'PDF · canal de fuga',dialog:'tailraceSourceDialog',source:'Dados do PDF'},form:{panel:'formView',nav:'formNav',tab:'formTab',hash:'#formulario',title:'Balanço Hídrico',base:'Balanço hídrico · 1h',dialog:'formSourceDialog',source:'Critérios do Balanço Hídrico'}};
   let view='generation';
   function show(next,changeHash=true){
     view=next;const selected=views[next];
