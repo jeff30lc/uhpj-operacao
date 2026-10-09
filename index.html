@@ -82,7 +82,7 @@ body {
   background: #008080;
   color: #000;
   font: 12px/1.5 Tahoma, "MS Sans Serif", Arial, sans-serif;
-  padding: 16px 16px 54px;
+  padding: 16px;
 }
 [hidden] { display: none !important; }
 body *, body *::before, body *::after { border-radius: 0 !important; }
@@ -129,7 +129,7 @@ body .form-card input:focus, body .form-card select:focus { outline: 1px dotted 
   display: grid;
   grid-template-columns: 204px minmax(0, 1fr);
   max-width: 1680px;
-  min-height: calc(100vh - 70px);
+  min-height: calc(100vh - 32px);
   margin: 0 auto;
   background: #c0c0c0;
   border: 2px solid;
@@ -175,7 +175,7 @@ body .retro-help { font-weight: 700; padding: 0; min-height: 21px; height: 21px;
   align-self: start;
   width: auto;
   min-width: 0;
-  height: calc(100vh - 111px);
+  height: calc(100vh - 73px);
   min-height: 430px;
   margin: 7px 0 0 3px;
   padding: 9px;
@@ -249,8 +249,7 @@ body .export-button { display: flex; gap: 7px; font-size: 11px; padding: 7px 12p
 .control-modes { height: auto; padding: 0 0 14px; border-bottom: 1px solid #808080; background: transparent; }
 .control-modes p { color: #333; }
 body .segmented button { font-size: 12px; }
-body .segmented button.selected, body .mode-options button[aria-pressed="true"], body .mobile-view-tabs .active,
-body .retro-start[aria-expanded="true"], body .retro-task {
+body .segmented button.selected, body .mode-options button[aria-pressed="true"], body .mobile-view-tabs .active {
   border-color: #404040 #fff #fff #404040;
   box-shadow: inset 1px 1px #808080;
   color: #000;
@@ -445,41 +444,6 @@ body .close-button { width: 23px; height: 23px; min-height: 23px; font: 700 20px
 dl { font-size: 12px; margin-top: 16px; }
 dt { font-weight: 700; margin-top: 14px; }
 dd { color: #333; line-height: 1.6; }
-.retro-taskbar {
-  position: fixed;
-  inset: auto 0 0;
-  z-index: 40;
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  min-height: 37px;
-  padding: 4px 5px;
-  background: #c0c0c0;
-  border-top: 1px solid #fff;
-  box-shadow: 0 -1px #dfdfdf;
-}
-body .retro-start { display: flex; align-items: center; gap: 6px; padding: 3px 9px; height: 29px; font-weight: 700; font-size: 13px; }
-.retro-start-icon { display: grid; grid-template-columns: 7px 7px; gap: 1px; transform: skewY(-9deg); filter: drop-shadow(1px 1px #555); }
-.retro-start-icon i { display: block; width: 7px; height: 7px; background: #e43d30; border: 1px solid #800000; }
-.retro-start-icon i:nth-child(2) { background: #00a000; border-color: #005000; }
-.retro-start-icon i:nth-child(3) { background: #164bde; border-color: #000080; }
-.retro-start-icon i:nth-child(4) { background: #ffdd00; border-color: #807000; }
-.retro-task-divider { border-left: 1px solid #808080; border-right: 1px solid #fff; height: 25px; margin-right: 2px; }
-body .retro-task { display: flex; align-items: center; gap: 7px; max-width: 310px; width: 310px; min-width: 0; height: 29px; padding: 4px 8px; text-align: left; font-size: 11px; }
-#retroTaskTitle { overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
-.retro-tray { display: flex; align-items: center; justify-content: center; gap: 9px; height: 28px; margin-left: auto; padding: 2px 10px; border: 1px solid; border-color: #808080 #fff #fff #808080; font-size: 11px; white-space: nowrap; }
-.retro-tray-status { width: 12px; height: 11px; background: #008080; border: 1px solid #000; box-shadow: inset 1px 1px #00ffff; }
-.retro-tray-label { color: #444; font-size: 10px; }
-.retro-start-menu { position: fixed; bottom: 37px; left: 5px; z-index: 39; display: flex; width: 292px; max-width: calc(100vw - 10px); background: #c0c0c0; padding: 3px; border: 2px solid; border-color: #fff #000 #000 #fff; box-shadow: var(--retro-raised); }
-.retro-start-banner { background: #808080; color: #c0c0c0; font: 700 24px/1 Tahoma, Arial, sans-serif; writing-mode: vertical-rl; transform: rotate(180deg); padding: 12px 7px; letter-spacing: -1px; }
-.retro-start-banner b { color: #fff; font-weight: 400; }
-.retro-start-items { padding: 3px; flex: 1; min-width: 0; }
-.retro-start-items p { font-size: 10px; color: #444; margin: 4px 7px 7px; }
-body .retro-start-items button { width: 100%; border: 1px solid transparent; box-shadow: none; background: transparent; display: flex; align-items: center; gap: 10px; text-align: left; font-size: 11px; padding: 7px 6px; min-height: 36px; }
-body .retro-start-items button:hover, body .retro-start-items button:focus-visible { color: #fff; background: #000080; }
-body .retro-start-items .retro-menu-help { margin-top: 6px; border-top: 1px solid #808080; }
-.retro-menu-icon { width: 24px; font: 700 22px/1 Tahoma, sans-serif; color: #000080; text-shadow: 1px 1px #fff; text-align: center; flex-shrink: 0; }
-.retro-start-items button:hover .retro-menu-icon, .retro-start-items button:focus-visible .retro-menu-icon { color: #fff; text-shadow: none; }
 ::-webkit-scrollbar { width: 16px; height: 16px; }
 ::-webkit-scrollbar-track { background: repeating-conic-gradient(#c0c0c0 0% 25%, #dfdfdf 0% 50%) 0/2px 2px; }
 ::-webkit-scrollbar-thumb { background: #c0c0c0; border: 1px solid; border-color: #fff #404040 #404040 #fff; box-shadow: var(--retro-raised); }
@@ -561,8 +525,8 @@ body .retro-start-items .retro-menu-help { margin-top: 6px; border-top: 1px soli
   .reservoir-unit-note { padding: 12px 0 0; border-left: 0; border-top: 1px solid #808080; }
 }
 @media (max-width: 760px) {
-  body { padding: 6px 6px 48px; }
-  .retro-window { display: block; min-height: calc(100vh - 54px); }
+  body { padding: 6px; }
+  .retro-window { display: block; min-height: calc(100vh - 12px); }
   .retro-titlebar { font-size: 12px; top: 0; gap: 8px; }
   .retro-title { gap: 5px; }
   .rail { display: none; }
@@ -631,10 +595,6 @@ body .retro-start-items .retro-menu-help { margin-top: 6px; border-top: 1px soli
   .form-chart-legend { padding-inline: 10px; }
   .page-footer { flex-wrap: wrap; padding: 7px; font-size: 9px; }
   .page-footer span { max-width: none; }
-  .retro-taskbar { gap: 5px; }
-  body .retro-task { width: auto; flex: 1; font-size: 10px; }
-  .retro-tray { padding-inline: 7px; gap: 5px; }
-  .retro-tray-label { display: none; }
 }
 @media (max-width: 400px) {
   .retro-titlebar { font-size: 11px; }
@@ -647,13 +607,11 @@ body .retro-start-items .retro-menu-help { margin-top: 6px; border-top: 1px soli
   .gate-grid { grid-template-columns: 1fr; }
   .metric-value, .turbine-results .metric-value, .reservoir-results .metric-value { font-size: 24px; }
   .form-result>strong { font-size: 22px; }
-  .retro-tray-status { display: none; }
-  body .retro-task { padding-inline: 5px; }
 }
 @media print {
   body { padding: 0; background: #fff; }
   .retro-window { display: block; border: 0; box-shadow: none; }
-  .rail, .retro-titlebar, .retro-taskbar, .retro-start-menu, .mobile-view-tabs { display: none !important; }
+  .rail, .retro-titlebar, .mobile-view-tabs { display: none !important; }
   main { padding: 0; }
 }
 
@@ -796,25 +754,6 @@ body .retro-start-items .retro-menu-help { margin-top: 6px; border-top: 1px soli
     </main>
   </div>
   </div>
-  <nav class="retro-start-menu" id="retroStartMenu" aria-label="Menu Iniciar" hidden>
-    <div class="retro-start-banner" aria-hidden="true">UHPJ <b>98</b></div>
-    <div class="retro-start-items">
-      <p>Operação da usina</p>
-      <button type="button" data-retro-nav="generationNav"><span class="retro-menu-icon" aria-hidden="true">▥</span>Faixas de operação</button>
-      <button type="button" data-retro-nav="turbineNav"><span class="retro-menu-icon" aria-hidden="true">↯</span>Vazão turbinada</button>
-      <button type="button" data-retro-nav="spillwayNav"><span class="retro-menu-icon" aria-hidden="true">≋</span>Vazão vertida</button>
-      <button type="button" data-retro-nav="reservoirNav"><span class="retro-menu-icon" aria-hidden="true">▤</span>Cota × Volume</button>
-      <button type="button" data-retro-nav="tailraceNav"><span class="retro-menu-icon" aria-hidden="true">↳</span>Canal de fuga</button>
-      <button type="button" data-retro-nav="formNav"><span class="retro-menu-icon" aria-hidden="true">▦</span>Formulário · 48h</button>
-      <button type="button" class="retro-menu-help" data-retro-nav="sourceButton"><span class="retro-menu-icon" aria-hidden="true">?</span>Origem dos dados e critérios</button>
-    </div>
-  </nav>
-  <footer class="retro-taskbar" aria-label="Barra de tarefas">
-    <button type="button" id="retroStart" class="retro-start" aria-expanded="false" aria-controls="retroStartMenu"><span class="retro-start-icon" aria-hidden="true"><i></i><i></i><i></i><i></i></span>Iniciar</button>
-    <span class="retro-task-divider" aria-hidden="true"></span>
-    <button type="button" class="retro-task" id="retroTask" title="Voltar ao início da tela"><span class="retro-app-icon" aria-hidden="true"></span><span id="retroTaskTitle">UHPJ · Faixas de operação</span></button>
-    <span class="retro-tray"><span class="retro-tray-status" aria-hidden="true"></span><span class="retro-tray-label">UHPJ</span><time id="retroClock" aria-label="Horário local"></time></span>
-  </footer>
   <dialog id="sourceDialog"><div class="dialog-heading"><div><p class="eyebrow">BASE DE CONSULTA</p><h2>Origem e critérios</h2></div><button id="closeSource" class="close-button" aria-label="Fechar">×</button></div><p class="source-name" id="sourceName"></p><dl><dt>Aba</dt><dd>D-Turb_HBruta</dd><dt>Queda bruta</dt><dd>Coluna F, linhas 17 a 334. 318 valores tabelados, de 14,95 a 30,85 m. O valor 30,80 m não consta na tabela.</dd><dt>Carga</dt><dd>Linha 15, colunas G a AM. 33 pontos de carga entre 10 e 40,1 MW.</dd><dt>Vazão turbinada</dt><dd>Valor numérico salvo na célula de cruzamento entre a queda bruta e a carga. Apresentado com duas casas decimais. A unidade m³/s foi adotada nesta versão; o texto da tabela não explicita a unidade.</dd><dt>Classificação</dt><dd>Verde: permitida. Vermelho: proibida. Demais cores ou ausência de cor: sem classificação pela legenda. Uma vazão positiva, isoladamente, não indica carga permitida.</dd><dt>Zeros e dados ausentes</dt><dd>Zeros da planilha são exibidos como dados indisponíveis na consulta. O valor bruto permanece visível na tabela completa e na exportação. Em 30,85 m, todas as vazões salvas são zero.</dd><dt>UG1 e UG2</dt><dd>A planilha contém uma única tabela unitária para as duas unidades. Selecionar UG1 ou UG2 identifica a unidade consultada, usando a mesma base.</dd><dt>Método</dt><dd>Consulta exata de pontos tabelados. Sem interpolação, extrapolação ou alteração das faixas de operação.</dd></dl><button id="closeSourceBottom" class="primary-button">Voltar à consulta</button></dialog>
   <dialog id="turbineSourceDialog"><div class="dialog-heading"><div><p class="eyebrow">BASE DE VAZÃO TURBINADA · UG1 E UG2</p><h2>Origem e critérios</h2></div><button type="button" id="closeTurbineSource" class="close-button" aria-label="Fechar dados de vazão turbinada">×</button></div><p class="source-name">UHPJ_Tabela de Vazão Turbinada por Unidade Geradora.pdf</p><dl><dt>Documento</dt><dd>Manual de Operação do Reservatório da Usina Hidrelétrica Passo São João. MOR-VII-S2-A03, versão 00, de 12/04/2011. Tabela de Vazão Turbinada por Máquina, anexo Nº 03. Valores das páginas 2 a 18.</dd><dt>QB · Queda bruta</dt><dd>171 pontos de 14,00 a 31,00 m, em passos de 0,10 m. A QB selecionada é aplicada às duas unidades geradoras.</dd><dt>Carga</dt><dd>42 pontos de 1 a 42 MW, em passos de 1 MW. Cada unidade tem sua própria carga selecionada. Alterar a QB preserva as cargas escolhidas e atualiza os resultados e as condições no PDF.</dd><dt>Vazão turbinada</dt><dd>Valor unitário em m³/s no cruzamento entre a QB e a carga. A tabela fornecida é aplicada à UG1 e à UG2. Cada resultado indica a página de origem. A soma é exibida quando as duas combinações possuem vazão numérica.</dd><dt>Asterisco *</dt><dd>A nota do documento identifica o asterisco como Unidade Geradora operando fora da faixa operativa permitida. Foram extraídos 5.902 valores numéricos e 1.280 asteriscos. Um asterisco mantém a vazão indisponível; não é convertido em zero. Quando alguma UG não tem vazão informada, o total fica indisponível e o subtotal com dados é identificado.</dd><dt>Base de consulta</dt><dd>Esta tela usa a tabela de vazão turbinada do PDF MOR-VII-S2-A03. A consulta Faixas de operação usa a classificação da planilha REV 3 fornecida anteriormente.</dd><dt>Método</dt><dd>Consulta exata dos valores tabelados, sem interpolação ou extrapolação de QB, carga ou vazão.</dd></dl><button type="button" id="closeTurbineSourceBottom" class="primary-button">Voltar à vazão turbinada</button></dialog>
   <script>
@@ -1960,70 +1899,9 @@ window.UHPJ_FORM_DATA={
   <script>
 (() => {
   'use strict';
-  const start = document.getElementById('retroStart');
-  const menu = document.getElementById('retroStartMenu');
-  const title = document.getElementById('retroTaskTitle');
-  const clock = document.getElementById('retroClock');
-  const source = document.getElementById('sourceButton');
-  const items = [...menu.querySelectorAll('button[data-retro-nav]')];
-
-  function setMenu(open, returnFocus = false) {
-    menu.hidden = !open;
-    start.setAttribute('aria-expanded', String(open));
-    if (returnFocus) start.focus();
-  }
-  start.addEventListener('click', () => setMenu(menu.hidden));
-  start.addEventListener('keydown', event => {
-    if (event.key === 'ArrowUp' || event.key === 'ArrowDown') {
-      event.preventDefault();
-      setMenu(true);
-      items[event.key === 'ArrowUp' ? items.length - 1 : 0].focus();
-    }
+  document.getElementById('retroHelp').addEventListener('click', () => {
+    document.getElementById('sourceButton').click();
   });
-  items.forEach(item => item.addEventListener('click', () => {
-    setMenu(false, item.dataset.retroNav === 'sourceButton');
-    document.getElementById(item.dataset.retroNav).click();
-    if (item.dataset.retroNav !== 'sourceButton') {
-      const heading = document.querySelector('main > section:not([hidden]) h1');
-      heading.setAttribute('tabindex', '-1');
-      heading.focus({ preventScroll: true });
-    }
-  }));
-  menu.addEventListener('keydown', event => {
-    if (!['ArrowUp', 'ArrowDown', 'Home', 'End'].includes(event.key)) return;
-    event.preventDefault();
-    const current = items.indexOf(document.activeElement);
-    const next = event.key === 'Home' ? 0 : event.key === 'End' ? items.length - 1 :
-      (current + (event.key === 'ArrowDown' ? 1 : -1) + items.length) % items.length;
-    items[next].focus();
-  });
-  document.addEventListener('click', event => {
-    if (!menu.hidden && !menu.contains(event.target) && !start.contains(event.target)) setMenu(false);
-  });
-  document.addEventListener('keydown', event => {
-    if (event.key === 'Escape' && !menu.hidden) {
-      event.preventDefault();
-      setMenu(false, true);
-    }
-  });
-  document.getElementById('retroHelp').addEventListener('click', () => source.click());
-  document.getElementById('retroTask').addEventListener('click', () => {
-    setMenu(false);
-    window.scrollTo({ top: 0, behavior: 'auto' });
-    document.getElementById('main').focus({ preventScroll: true });
-  });
-  document.getElementById('main').setAttribute('tabindex', '-1');
-  function updateTitle() { title.textContent = 'UHPJ · ' + document.getElementById('headerView').textContent; }
-  new MutationObserver(updateTitle).observe(document.getElementById('headerView'), { childList: true });
-  updateTitle();
-  function updateClock() {
-    const now = new Date();
-    clock.textContent = now.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
-    clock.dateTime = now.toISOString();
-    clock.title = now.toLocaleDateString('pt-BR', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
-  }
-  updateClock();
-  setInterval(updateClock, 30000);
 })();
 
 </script>
