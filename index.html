@@ -60,6 +60,13 @@
 @media(max-width:760px){.form-manual-grid{gap:13px}.form-card-heading{padding:14px}.form-card-body{padding:15px 14px}.form-card-heading h2{font-size:12px}.form-card-heading>span{font-size:7px}.form-two-fields{grid-template-columns:1fr;gap:12px}.form-card input,.form-card select{font-size:11px}.form-gate-inputs{grid-template-columns:repeat(3,minmax(0,1fr));gap:15px}.form-gate-inputs .form-full-label{font-size:9px}.form-calculated-grid{padding:17px 15px;gap:10px}.form-result{padding:14px 12px}.form-result>span{font-size:7px;letter-spacing:.5px}.form-result>strong{font-size:25px}.form-result p{font-size:8px}.form-save-bar{flex-wrap:wrap;padding:14px}.form-save-bar>div{flex-basis:100%}.form-save-bar .primary-button{flex:1}.form-history-toolbar{padding:15px}.form-history-controls input{width:188px}.form-details{padding-inline:15px}.form-chart-legend{padding-inline:15px;gap:9px 13px}.form-chart-legend button,.form-chart-legend>span{font-size:9px}.form-chart-inspection,.form-chart-footer{padding-inline:15px}.form-time-chart{padding-inline:9px}.form-shortcuts{gap:8px}.form-shortcuts a{font-size:10px;padding:8px 10px}}
 @media(max-width:400px){.form-manual-grid{grid-template-columns:1fr}.form-gates{grid-column:auto}.form-two-fields{grid-template-columns:1fr 1fr}.form-card-heading>span{font-size:8px}.form-result>strong{font-size:23px}.mobile-view-tabs{grid-template-columns:1fr 1fr}}
 .form-settings{margin-bottom:20px;padding:14px 18px;font-size:11px;color:#597e8c}.form-settings summary{cursor:pointer;font-weight:550}.form-settings p{font-size:10px;line-height:1.8;color:#80959d}.form-idle-fields{display:flex;gap:16px;align-items:flex-end;flex-wrap:wrap}.form-idle-fields label{display:block;font-size:10px;margin-bottom:7px}.form-idle-fields input{width:180px;height:36px;border:1px solid #d7e2e6;border-radius:5px;padding:0 10px;color:var(--ink);font-family:inherit}.form-history td:last-child,.form-history th:last-child{position:sticky;right:0;background:#f7f9fa;border-left:1px solid var(--line);z-index:1}.form-history thead th:last-child{z-index:2}
+.form-reading-reminder{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:14px 16px;margin-bottom:18px;border:1px solid #c2a337;background:#fff5ad;color:#382e07}
+.form-reading-reminder strong{display:block;font-size:13px}.form-reading-reminder p{margin:5px 0;font-size:11px}.form-reading-reminder small{font-size:10px}
+.form-reading-actions{display:flex;gap:8px;flex-wrap:wrap;flex-shrink:0}.form-schedule-info{font-size:11px;margin:0 0 16px;color:#554a20}
+.form-reading-label{display:block;font-size:10px;font-weight:700;margin-top:3px}.form-reading-note{font-size:11px}
+body .form-history tbody tr.form-reading-pending>td{background:#fff49a;color:#382e07}
+#formReadingDialog{max-width:540px}#formReadingDialog>p{line-height:1.7}#formReadingDialog .form-reading-actions{margin-top:20px}
+@media(max-width:760px){.form-reading-reminder{align-items:flex-start;flex-direction:column}.form-reading-actions{width:100%}.form-reading-actions button{flex:1}.form-reading-reminder strong{font-size:12px}}
 
 </style>
   <style>
@@ -434,6 +441,9 @@ body .form-chart-legend button[aria-pressed="true"] { background: #dfdfdf; borde
 .form-chart-footer { color: #444; font-size: 10px; border-top-color: #808080; padding: 9px 14px; }
 .form-time-chart .chart-empty { color: #444; padding: 60px 25px; }
 .hourly-form, .form-history, .form-charts { scroll-margin-top: 44px; }
+.form-reading-reminder { background: #fff49a; border: 2px solid; border-color: #fff #808080 #808080 #fff; box-shadow: inset -1px -1px #dfdfdf; color: #000; padding: 12px 14px; }
+.form-reading-reminder p, .form-reading-reminder small, .form-schedule-info, .form-reading-note { color: #333; }
+body .form-history tbody tr.form-reading-pending>td { background: #fff49a; color: #000; }
 dialog { background: #c0c0c0; color: #000; border: 2px solid; border-color: #fff #000 #000 #fff; box-shadow: var(--retro-raised), 3px 3px #0008; padding: 3px 18px 18px; max-width: 680px; }
 dialog::backdrop { background: #0005; backdrop-filter: none; }
 .dialog-heading { background: linear-gradient(90deg, #000080, #1084d0); color: #fff; padding: 4px 5px 4px 8px; margin: 0 -15px 15px; gap: 12px; min-height: 31px; }
@@ -642,6 +652,10 @@ dd { color: #333; line-height: 1.6; }
     <header class="topbar"><span>Usina hidrelétrica <span class="topbar-divider">/</span> <strong id="headerView">Consulta de operação</strong></span><span class="base-tag" id="headerBase"><span></span>Planilha REV 3</span></header>
     <main id="main">
       <nav class="mobile-view-tabs" aria-label="Tipo de consulta"><button id="generationTab" class="active" aria-pressed="true">Faixas</button><button id="turbineTab" aria-pressed="false">Turbinada</button><button id="spillwayTab" aria-pressed="false">Vertida</button><button id="reservoirTab" aria-pressed="false">Reservatório</button><button id="tailraceTab" aria-pressed="false">Canal de fuga</button><button id="formTab" aria-pressed="false">Balanço Hídrico</button></nav>
+      <section id="formReadingReminder" class="form-reading-reminder" role="status" aria-live="polite" hidden>
+        <div><strong id="formReminderTitle"></strong><p id="formReminderSummary"></p><small id="formReminderNext"></small></div>
+        <div class="form-reading-actions"><button type="button" id="formFillPending">Preencher leitura</button><button type="button" id="formViewPending">Ver pendências</button></div>
+      </section>
       <section id="generationView" aria-label="Vazão turbinada">
       <div class="page-heading"><div><p class="eyebrow">FAIXAS OPERATIVAS</p><h1>Da queda à geração.</h1><p class="intro">Selecione a queda bruta para consultar as cargas permitidas e a vazão turbinada.</p></div><button class="export-button" id="exportButton"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12m-4-4 4 4 4-4M5 16v5h14v-5"/></svg>Exportar consulta</button></div>
       <section class="control-panel" aria-label="Seleção de unidade, queda e carga">
@@ -728,11 +742,12 @@ dd { color: #333; line-height: 1.6; }
       <section id="formView" hidden aria-label="Balanço Hídrico">
         <div class="page-heading"><div><p class="eyebrow">REGISTRO OPERATIVO · UHPJ</p><h1>Balanço Hídrico.</h1><p class="intro">Registre as leituras a cada hora. Os resultados e o balanço hídrico são calculados automaticamente.</p></div><span class="form-local-tag">Salvo neste navegador</span></div>
         <nav class="form-shortcuts" aria-label="Seções do Balanço Hídrico"><a href="#hourlyInput">Leitura da hora</a><a href="#formHistory">Histórico de 48h</a><a href="#formCharts">Gráficos</a></nav>
+        <p class="form-schedule-info">Agenda diária: 01:00 a 23:00 e 23:59 · <span id="formScheduleNext"></span>. Avisos com o aplicativo aberto, pelo relógio deste dispositivo.</p>
         <div id="formStorageNotice" class="missing-notice" role="status" hidden></div>
         <details class="panel form-settings"><summary>Configurar vazão das UGs rodando em vazio</summary><form id="formIdleSettings"><p>Cadastre a vazão fixa em m³/s. Os valores são usados no estado Rodando em vazio e recalculam o histórico deste navegador. Deixe em branco enquanto o valor não estiver disponível.</p><div class="form-idle-fields"><div><label for="formIdle0">UG1 · vazão fixa em vazio (m³/s)</label><input type="number" id="formIdle0" min="0" step="any" placeholder="Ainda não informada"></div><div><label for="formIdle1">UG2 · vazão fixa em vazio (m³/s)</label><input type="number" id="formIdle1" min="0" step="any" placeholder="Ainda não informada"></div><button type="submit" class="secondary-button">Salvar vazões em vazio</button></div><p id="formIdleStatus" role="status"></p></form></details>
         <form id="hourlyInput" class="hourly-form">
           <div class="form-manual-grid">
-            <section class="panel form-card"><div class="form-card-heading"><h2>Data e hora</h2><span>Manual</span></div><div class="form-card-body"><label for="formHour">Hora de encerramento</label><input type="datetime-local" id="formHour" step="3600" required><small>Leitura em hora cheia · intervalo de 1h</small><p class="form-period" id="formPeriod"></p></div></section>
+            <section class="panel form-card"><div class="form-card-heading"><h2>Data e hora</h2><span>Manual</span></div><div class="form-card-body"><label for="formHour">Hora de encerramento</label><input type="datetime-local" id="formHour" step="60" required><small>01:00 a 23:00 e 23:59 · intervalo operacional de 1h</small><p class="form-period" id="formPeriod"></p></div></section>
             <section class="panel form-card"><div class="form-card-heading"><h2>Níveis <small>m</small></h2><span>Manual</span></div><div class="form-card-body form-two-fields"><div><label for="formMontante">Montante</label><input type="text" inputmode="decimal" data-decimal-mask pattern="[0-9]+,[0-9]{2}" id="formMontante" required placeholder="Ex.: 127,63" aria-describedby="formLevelHint"></div><div><label for="formJusante">Jusante</label><input type="text" inputmode="decimal" data-decimal-mask pattern="[0-9]+,[0-9]{2}" id="formJusante" required placeholder="Ex.: 98,12" aria-describedby="formLevelHint"></div><small id="formLevelHint">QB = Montante − Jusante · Digite 12763 → 127,63</small></div></section>
             <section class="panel form-card"><div class="form-card-heading"><h2>UG1</h2><span>Manual</span></div><div class="form-card-body"><label for="formEnergy0">Geração na hora <span>MWh</span></label><input type="number" id="formEnergy0" min="0" step="0.01" required placeholder="Energia produzida em 1h"><label for="formState0">Estado da máquina</label><select id="formState0" required></select></div></section>
             <section class="panel form-card"><div class="form-card-heading"><h2>UG2</h2><span>Manual</span></div><div class="form-card-body"><label for="formEnergy1">Geração na hora <span>MWh</span></label><input type="number" id="formEnergy1" min="0" step="0.01" required placeholder="Energia produzida em 1h"><label for="formState1">Estado da máquina</label><select id="formState1" required></select></div></section>
@@ -747,7 +762,7 @@ dd { color: #333; line-height: 1.6; }
           <div class="form-result"><span>VERTIDA TOTAL <small>m³/s</small></span><strong id="formSpillTotal">—</strong><p id="formGateFlows">C1 a C6</p></div><div class="form-result"><span>TURBINADA TOTAL <small>m³/s</small></span><strong id="formTurbineTotal">—</strong><p id="formUnitFlows">UG1 e UG2</p></div><div class="form-result"><span>QUEDA BRUTA <small>m</small></span><strong id="formHead">—</strong><p id="formNarNaj">Montante − Jusante</p></div><div class="form-result"><span>ACUMULAÇÃO <small>m³/s</small></span><strong id="formAccumulation">—</strong><p>ΔV / 3.600 s · sinal preservado</p></div>
           <div class="form-result"><span>VOLUME DO RESERVATÓRIO <small>hm³</small></span><strong id="formVolume">—</strong><p id="formDeltaVolume">ΔV da última hora: — hm³</p></div><div class="form-result"><span>VERTIDA NÃO TURBINÁVEL <small>m³/s</small></span><strong id="formNonTurbinable">—</strong><p id="formNonTurbReason">Menor entre vertida e referência sanitária</p></div><div class="form-result"><span>CURVA DE JUSANTE <small>m³/s</small></span><strong id="formTailraceFlow">—</strong><p>Vazão pela tabela do canal de fuga</p></div><div class="form-result"><span>POTÊNCIA MÉDIA NA HORA <small>MW</small></span><strong id="formPowerTotal">—</strong><p id="formUnitPowers">Energia (MWh) / 1h</p></div>
         </div><details class="form-details"><summary>Origem, interpolação e pendências desta leitura</summary><div id="formDetails"></div></details></section>
-        <section class="panel form-history" id="formHistory"><div class="panel-heading"><div><h2>Leituras das últimas 48 horas</h2><p id="formHistorySubtitle"></p></div><div class="form-history-controls"><label for="formHistoryEnd">Janela encerrada em</label><input type="datetime-local" id="formHistoryEnd" step="3600"><button type="button" class="secondary-button" id="formHistoryNow">Agora</button></div></div><div class="form-history-toolbar"><span id="formHistoryCount"></span><div><button type="button" class="secondary-button" id="formExportCsv">Exportar 48h · CSV</button><button type="button" class="secondary-button" id="formExportBackup">Backup completo · JSON</button><button type="button" class="secondary-button" id="formImportBackup">Restaurar backup</button><input type="file" id="formBackupFile" accept="application/json,.json" hidden></div></div><div class="table-scroll"><table><thead><tr><th>Data/hora</th><th>Montante <span>m</span></th><th>Jusante <span>m</span></th><th>UG1 <span>MWh / estado</span></th><th>UG2 <span>MWh / estado</span></th><th>Aberturas C1–C6 <span>m</span></th><th>Indexador</th><th>QB <span>m</span></th><th>Vertida <span>m³/s</span></th><th>Turbinada <span>m³/s</span></th><th>Defl. <span>m³/s</span></th><th>Acum. <span>m³/s</span></th><th>Afl. <span>m³/s</span></th><th>Afl. Ref. <span>m³/s</span></th><th>Estado hidráulico</th><th>Volume <span>hm³</span></th><th>Sanitária ref. <span>m³/s</span></th><th>Não turbinável <span>m³/s</span></th><th><span class="sr-only">Editar leitura</span></th></tr></thead><tbody id="formHistoryBody"></tbody></table><div id="formHistoryEmpty" class="empty">Nenhuma leitura salva nesta janela de 48 horas.</div></div><div class="table-footer"><span>Horas sem leitura ficam sem dados nos cálculos e gráficos.</span><span>Os registros fora da janela continuam no backup.</span></div></section>
+        <section class="panel form-history" id="formHistory"><div class="panel-heading"><div><h2>Leituras das últimas 48 horas</h2><p id="formHistorySubtitle"></p></div><div class="form-history-controls"><label for="formHistoryEnd">Janela encerrada em</label><input type="datetime-local" id="formHistoryEnd" step="60"><button type="button" class="secondary-button" id="formHistoryNow">Agora</button></div></div><div class="form-history-toolbar"><span id="formHistoryCount"></span><div><button type="button" class="secondary-button" id="formExportCsv">Exportar 48h · CSV</button><button type="button" class="secondary-button" id="formExportBackup">Backup completo · JSON</button><button type="button" class="secondary-button" id="formImportBackup">Restaurar backup</button><input type="file" id="formBackupFile" accept="application/json,.json" hidden></div></div><div class="table-scroll"><table><thead><tr><th>Data/hora</th><th>Montante <span>m</span></th><th>Jusante <span>m</span></th><th>UG1 <span>MWh / estado</span></th><th>UG2 <span>MWh / estado</span></th><th>Aberturas C1–C6 <span>m</span></th><th>Indexador</th><th>QB <span>m</span></th><th>Vertida <span>m³/s</span></th><th>Turbinada <span>m³/s</span></th><th>Defl. <span>m³/s</span></th><th>Acum. <span>m³/s</span></th><th>Afl. <span>m³/s</span></th><th>Afl. Ref. <span>m³/s</span></th><th>Estado hidráulico</th><th>Volume <span>hm³</span></th><th>Sanitária ref. <span>m³/s</span></th><th>Não turbinável <span>m³/s</span></th><th><span class="sr-only">Editar leitura</span></th></tr></thead><tbody id="formHistoryBody"></tbody></table><div id="formHistoryEmpty" class="empty">Nenhum horário vencido ou registro nesta janela de 48 horas.</div></div><div class="table-footer"><span>Amarelo: leitura pendente. Horários sem registro ficam sem dados nos cálculos e gráficos.</span><span>Os registros fora da janela continuam no backup.</span></div></section>
         <section class="panel form-charts" id="formCharts"><div class="panel-heading"><div><h2>Comportamento do reservatório</h2><p id="formChartSubtitle"></p></div><label class="form-chart-span" for="formChartSpan">Período <select id="formChartSpan"><option value="48">48 horas</option><option value="24">24 horas</option></select></label></div><div class="form-chart-legend" id="formChartLegend"></div><div class="form-time-chart" id="formCombinedChart"></div><div class="form-chart-inspection" id="formChartInspection" aria-live="polite">Selecione uma hora no gráfico para consultar os valores.</div><div class="form-chart-footer"><span>Vazões: eixo esquerdo · nível do reservatório: eixo direito</span><span>Linhas interrompidas quando não há dados</span></div></section>
         <footer class="page-footer"><span>Registros locais · use o backup JSON para transferir ou restaurar as leituras</span><button type="button" id="formSourceFooter">Ver origem e critérios <span aria-hidden="true">↗</span></button></footer>
       </section>
@@ -1505,7 +1520,12 @@ window.UHPJ_TAILRACE_DATA = {"source":"UHPJ_Tabela de Descarga do Canal de Fuga.
 })();
 
 </script>
-  <dialog id="formSourceDialog"><div class="dialog-heading"><div><p class="eyebrow">BALANÇO HÍDRICO</p><h2>Origem e critérios</h2></div><button type="button" id="closeFormSource" class="close-button" aria-label="Fechar critérios do Balanço Hídrico">×</button></div><dl><dt>Intervalo e energia</dt><dd>Uma leitura por hora cheia. A geração digitada é a energia produzida naquela hora, em MWh, conforme a definição do operador. Potência média (MW) = energia (MWh) / 1h. Os níveis usados nos cálculos são os da leitura registrada: NAR = Montante, NAJ = Jusante e QB = Montante − Jusante.</dd><dt>Turbinas, comportas, reservatório e canal de fuga</dt><dd>Vazões turbinadas: MOR-VII-S2-A03, páginas 2 a 18. Vazões das seis comportas de segmento: MOR-VII-S2-A04, páginas 3 a 31. Volume acumulado: MOR-VII-S2-A02, páginas 3 a 23. Curva de jusante: MOR-VII-S2-A07, páginas 3 a 8. São usadas as mesmas bases das telas de consulta.</dd><dt>Interpolação</dt><dd>Interpolação linear autorizada pelo operador: entre cotas para volumes e curva de jusante; entre nível e abertura para as comportas; entre QB e potência média para as UGs. Todos os pontos envolvidos precisam ter valores válidos. Células vazias e asteriscos permanecem indisponíveis. Não há extrapolação. As telas de consulta individuais continuam exibindo seus pontos exatos.</dd><dt>Estados das máquinas</dt><dd>Parado com geração zero: vazão turbinada zero. Gerando: consulta pela QB e potência média da hora. Geração positiva com estado Parado ou Rodando em vazio indica uma combinação que precisa ser conferida e mantém a vazão indisponível.</dd><dt>Rodando em vazio</dt><dd id="formIdleRule"></dd><dt>Defluência e referência sanitária</dt><dd>Defluência = soma das vazões vertidas de C1 a C6 + vazões turbinadas da UG1 e UG2. Conforme a orientação do operador, a referência sanitária é somente informativa e não é somada. Vol 2.pdf, página 7, item 4.4, contém a tabela mensal; a página 31, item 4.2.2, informa que a vazão sanitária é provida pelas comportas segmento. A referência não representa uma medição adicional.</dd></dl><table class="form-source-table"><thead><tr><th>Mês</th><th>Sanitária de referência (m³/s)</th></tr></thead><tbody id="formSanitaryTable"></tbody></table><dl><dt>Variação de volume, acumulação e afluência</dt><dd>ΔV = volume acumulado desta leitura − volume da leitura da hora anterior, em hm³. Acumulação (m³/s) = ΔV × 1.000.000 / 3.600. Afluência = defluência + acumulação. O sinal da variação é preservado. Sem leitura exatamente 1h antes, ou com volume indisponível, esses resultados ficam indisponíveis. Não se distribui a variação por lacunas de várias horas.</dd><dt>Afl. Ref.</dt><dd>Média aritmética das quatro afluências: hora consultada e três horas anteriores. Todas precisam estar disponíveis em horas consecutivas. São necessárias cinco leituras consecutivas para obter quatro afluências a partir da primeira leitura de volume.</dd><dt>Vertida não turbinável</dt><dd>Menor valor entre a vazão vertida total e a referência sanitária, conforme o campo do exemplo de formulário fornecido. O motivo acompanha o indexador selecionado pelo operador.</dd><dt>Estado hidráulico</dt><dd>Classificação pelo diagrama da Figura 2, Vol 2.pdf, página 6, instrução UHPJ - 01/03 rev.39: Normal abaixo de 1.500 m³/s de Afl. Ref.; Atenção de 1.500 a menos de 2.500; Alerta de 2.500 a menos de 4.500; Emergência a partir de 4.500, ou nível superior a 128,35 m. Nas linhas divisórias de afluência, é adotada a categoria de maior severidade. O domínio de nível colorido da figura vai de 122,00 a 131,50 m. Sem afluência de referência válida, a classificação permanece indisponível, exceto na faixa superior a 128,35 m. A classificação desta tela se limita a nível e afluência; os outros critérios operativos descritos no manual e no PAE não são avaliados automaticamente.</dd><dt>PAE fornecido</dt><dd>PAE_Público_PASSOSAOJOAO_R6.pdf foi consultado como apoio. Sua página 92 apresenta características hidrológicas e não informa valor numérico de vazão sanitária. A referência mensal desta tela vem do Vol 2.pdf.</dd><dt>Histórico e gráficos</dt><dd>A janela de 48h contém somente os registros existentes naquele intervalo. Horas sem leitura não são convertidas em zero nem ligadas por linhas no gráfico. O gráfico principal usa as cores dos exemplos fornecidos e dois eixos: vazões em m³/s à esquerda e nível do reservatório em metros à direita. O período pode ser alternado entre 24h e 48h.</dd><dt>Armazenamento e correções</dt><dd>Os dados são salvos no armazenamento local deste navegador e desta origem/endereço. Não são sincronizados entre computadores. Exportar o backup JSON permite transferir e restaurar as leituras. Editar uma leitura recalcula as afluências e médias que dependem dela. O histórico mostra 48h; leituras anteriores permanecem no backup completo. A importação preserva as horas já existentes e acrescenta somente as novas.</dd></dl><button type="button" id="closeFormSourceBottom" class="primary-button">Voltar ao Balanço Hídrico</button></dialog>
+  <dialog id="formReadingDialog" aria-labelledby="formReadingTitle" aria-describedby="formReadingMessage">
+    <div class="dialog-heading"><div><p class="eyebrow">BALANÇO HÍDRICO</p><h2 id="formReadingTitle">Hora da leitura</h2></div><button type="button" id="closeReadingDialog" class="close-button" aria-label="Fechar aviso de leitura">×</button></div>
+    <p id="formReadingMessage"></p><p class="form-reading-note">Agenda diária: 01:00 a 23:00 e fechamento às 23:59. Os valores em edição são mantidos até você iniciar outra leitura.</p>
+    <div class="form-reading-actions"><button type="button" id="formReadingFill">Preencher leitura</button><button type="button" id="formReadingLater">Lembrar depois</button></div>
+  </dialog>
+  <dialog id="formSourceDialog"><div class="dialog-heading"><div><p class="eyebrow">BALANÇO HÍDRICO</p><h2>Origem e critérios</h2></div><button type="button" id="closeFormSource" class="close-button" aria-label="Fechar critérios do Balanço Hídrico">×</button></div><dl><dt>Intervalo e energia</dt><dd>Uma leitura por hora operacional: 01:00 a 23:00 e 23:59. O fechamento de 23:59 representa a 24ª hora do dia; não há nova leitura às 00:00. Os cálculos mantêm intervalos operacionais de 1h (3.600 s), inclusive na virada do dia. Registros antigos de 00:00 são preservados e ocupam a mesma hora operacional do fechamento anterior, sem duplicar a pendência. Com o aplicativo aberto, cada horário vencido sem registro gera uma linha amarela no histórico e um aviso. Ao salvar, a linha passa a exibir a leitura. Ao reabrir ou retornar à aba, os horários faltantes das últimas 48h são recalculados. A geração digitada é a energia produzida naquela hora, em MWh, conforme a definição do operador. Potência média (MW) = energia (MWh) / 1h. Os níveis usados nos cálculos são os da leitura registrada: NAR = Montante, NAJ = Jusante e QB = Montante − Jusante.</dd><dt>Turbinas, comportas, reservatório e canal de fuga</dt><dd>Vazões turbinadas: MOR-VII-S2-A03, páginas 2 a 18. Vazões das seis comportas de segmento: MOR-VII-S2-A04, páginas 3 a 31. Volume acumulado: MOR-VII-S2-A02, páginas 3 a 23. Curva de jusante: MOR-VII-S2-A07, páginas 3 a 8. São usadas as mesmas bases das telas de consulta.</dd><dt>Interpolação</dt><dd>Interpolação linear autorizada pelo operador: entre cotas para volumes e curva de jusante; entre nível e abertura para as comportas; entre QB e potência média para as UGs. Todos os pontos envolvidos precisam ter valores válidos. Células vazias e asteriscos permanecem indisponíveis. Não há extrapolação. As telas de consulta individuais continuam exibindo seus pontos exatos.</dd><dt>Estados das máquinas</dt><dd>Parado com geração zero: vazão turbinada zero. Gerando: consulta pela QB e potência média da hora. Geração positiva com estado Parado ou Rodando em vazio indica uma combinação que precisa ser conferida e mantém a vazão indisponível.</dd><dt>Rodando em vazio</dt><dd id="formIdleRule"></dd><dt>Defluência e referência sanitária</dt><dd>Defluência = soma das vazões vertidas de C1 a C6 + vazões turbinadas da UG1 e UG2. Conforme a orientação do operador, a referência sanitária é somente informativa e não é somada. Vol 2.pdf, página 7, item 4.4, contém a tabela mensal; a página 31, item 4.2.2, informa que a vazão sanitária é provida pelas comportas segmento. A referência não representa uma medição adicional.</dd></dl><table class="form-source-table"><thead><tr><th>Mês</th><th>Sanitária de referência (m³/s)</th></tr></thead><tbody id="formSanitaryTable"></tbody></table><dl><dt>Variação de volume, acumulação e afluência</dt><dd>ΔV = volume acumulado desta leitura − volume da leitura da hora anterior, em hm³. Acumulação (m³/s) = ΔV × 1.000.000 / 3.600. Afluência = defluência + acumulação. O sinal da variação é preservado. Sem leitura exatamente 1h antes, ou com volume indisponível, esses resultados ficam indisponíveis. Não se distribui a variação por lacunas de várias horas.</dd><dt>Afl. Ref.</dt><dd>Média aritmética das quatro afluências: hora consultada e três horas anteriores. Todas precisam estar disponíveis em horas consecutivas. São necessárias cinco leituras consecutivas para obter quatro afluências a partir da primeira leitura de volume.</dd><dt>Vertida não turbinável</dt><dd>Menor valor entre a vazão vertida total e a referência sanitária, conforme o campo do exemplo de formulário fornecido. O motivo acompanha o indexador selecionado pelo operador.</dd><dt>Estado hidráulico</dt><dd>Classificação pelo diagrama da Figura 2, Vol 2.pdf, página 6, instrução UHPJ - 01/03 rev.39: Normal abaixo de 1.500 m³/s de Afl. Ref.; Atenção de 1.500 a menos de 2.500; Alerta de 2.500 a menos de 4.500; Emergência a partir de 4.500, ou nível superior a 128,35 m. Nas linhas divisórias de afluência, é adotada a categoria de maior severidade. O domínio de nível colorido da figura vai de 122,00 a 131,50 m. Sem afluência de referência válida, a classificação permanece indisponível, exceto na faixa superior a 128,35 m. A classificação desta tela se limita a nível e afluência; os outros critérios operativos descritos no manual e no PAE não são avaliados automaticamente.</dd><dt>PAE fornecido</dt><dd>PAE_Público_PASSOSAOJOAO_R6.pdf foi consultado como apoio. Sua página 92 apresenta características hidrológicas e não informa valor numérico de vazão sanitária. A referência mensal desta tela vem do Vol 2.pdf.</dd><dt>Histórico e gráficos</dt><dd>A janela de 48h mostra as leituras salvas e os horários vencidos sem registro, destacados em amarelo. Pendências não são medições e não entram nos cálculos, gráficos, CSV nem backup. Horas sem leitura não são convertidas em zero nem ligadas por linhas no gráfico. O gráfico principal usa as cores dos exemplos fornecidos e dois eixos: vazões em m³/s à esquerda e nível do reservatório em metros à direita. O período pode ser alternado entre 24h e 48h.</dd><dt>Armazenamento e correções</dt><dd>Os dados são salvos no armazenamento local deste navegador e desta origem/endereço. Não são sincronizados entre computadores. Exportar o backup JSON permite transferir e restaurar as leituras. Editar uma leitura recalcula as afluências e médias que dependem dela. O histórico mostra 48h; leituras anteriores permanecem no backup completo. A importação preserva as horas já existentes e acrescenta somente as novas.</dd></dl><button type="button" id="closeFormSourceBottom" class="primary-button">Voltar ao Balanço Hídrico</button></dialog>
   <script>
 window.UHPJ_FORM_DATA={
   schema:1,
@@ -1526,13 +1546,30 @@ window.UHPJ_FORM_DATA={
   const finite=Number.isFinite,epsilon=1e-8;
   const unavailable=reason=>({available:false,value:null,method:'unavailable',reason,origins:[]});
   function hourIndex(hour){
-    if(typeof hour!=='string'||!/^\d{4}-\d{2}-\d{2}T\d{2}:00$/.test(hour))return null;
+    if(typeof hour!=='string'||!/^\d{4}-\d{2}-\d{2}T(?:\d{2}:00|23:59)$/.test(hour))return null;
     const [year,month,day,time]=[Number(hour.slice(0,4)),Number(hour.slice(5,7)),Number(hour.slice(8,10)),Number(hour.slice(11,13))];
-    const date=new Date(Date.UTC(year,month-1,day,time));
+    const date=new Date(Date.UTC(year,month-1,day,time,Number(hour.slice(14,16))));
     if(date.toISOString().slice(0,16)!==hour)return null;
-    return date.getTime()/3600000;
+    // 23:59 fecha a 24ª hora operacional. 00:00 é aceito apenas para ler registros antigos.
+    return Math.ceil(date.getTime()/3600000);
   }
-  const hourFromIndex=index=>new Date(index*3600000).toISOString().slice(0,16);
+  function hourFromIndex(index){
+    const date=new Date(index*3600000);
+    if(date.getUTCHours()===0)date.setUTCMinutes(-1);
+    return date.toISOString().slice(0,16);
+  }
+  const validReadingHour=(hour,allowLegacy=false)=>hourIndex(hour)!==null&&(allowLegacy||!hour.endsWith('T00:00'));
+  function latestDueHour(now=new Date()){
+    const pad=n=>String(n).padStart(2,'0');
+    const day=`${now.getFullYear()}-${pad(now.getMonth()+1)}-${pad(now.getDate())}`;
+    if(now.getHours()===23&&now.getMinutes()===59)return day+'T23:59';
+    if(now.getHours()===0)return hourFromIndex(hourIndex(day+'T00:00'));
+    return `${day}T${pad(now.getHours())}:00`;
+  }
+  const nextDueHour=(now=new Date())=>hourFromIndex(hourIndex(latestDueHour(now))+1);
+  function pendingReadings(results,now=new Date(),span=48){
+    return windowSlots(results,latestDueHour(now),span).filter(slot=>!slot.result);
+  }
   function nodes(values,value,mode){
     if(!finite(value))return null;
     const exact=values.find(v=>Math.abs(v-value)<epsilon);
@@ -1633,11 +1670,11 @@ window.UHPJ_FORM_DATA={
   }
   function preview(input,records,bases,data){
     if(hourIndex(input.hour)===null)return calculate(input,null,bases,data);
-    return derive([...records.filter(record=>record.hour!==input.hour),input],bases,data).find(result=>result.input.hour===input.hour);
+    return derive([...records.filter(record=>hourIndex(record.hour)!==hourIndex(input.hour)),input],bases,data).find(result=>result.input.hour===input.hour);
   }
-  function validate(input){
+  function validate(input,{allowLegacyHour=false}={}){
     const errors=[];
-    if(hourIndex(input.hour)===null)errors.push('Selecione uma data e hora válidas, com minutos 00.');
+    if(!validReadingHour(input.hour,allowLegacyHour))errors.push('Use um horário de 01:00 a 23:00, ou 23:59 para encerrar o dia.');
     for(const name of ['montante','jusante'])if(!finite(input[name])||input[name]<0)errors.push(`Preencha o nível de ${name}.`);
     if(!Array.isArray(input.energy)||input.energy.length!==2||input.energy.some(v=>!finite(v)||v<0))errors.push('Preencha a energia da hora de ambas as UGs com valores não negativos.');
     if(!Array.isArray(input.states)||input.states.length!==2||input.states.some(v=>!['G','P','V'].includes(v)))errors.push('Selecione o estado das duas máquinas.');
@@ -1655,15 +1692,16 @@ window.UHPJ_FORM_DATA={
     const hours=new Set();
     return value.records.map(record=>{
       const clean={hour:record.hour,montante:record.montante,jusante:record.jusante,energy:record.energy,states:record.states,openings:record.openings,index:record.index};
-      if(validate(clean).length||hours.has(clean.hour))throw new Error('Backup com leitura inválida ou hora duplicada.');
-      hours.add(clean.hour);return clean;
+      const index=hourIndex(clean.hour);
+      if(validate(clean,{allowLegacyHour:true}).length||hours.has(index))throw new Error('Backup com leitura inválida ou hora duplicada.');
+      hours.add(index);return clean;
     }).sort((a,b)=>a.hour.localeCompare(b.hour));
   }
   function idleFlowConfig(value){
     if(!Array.isArray(value)||value.length!==2||value.some(v=>v!==null&&(!finite(v)||v<0)))throw new Error('Informe uma vazão fixa não negativa para cada UG, ou deixe em branco.');
     return value.slice();
   }
-  window.UHPJFormModel={hourIndex,hourFromIndex,nodes,sample,volume,gate,turbine,canal,hydraulic,calculate,derive,preview,validate,windowSlots,decodeBackup,idleFlowConfig};
+  window.UHPJFormModel={hourIndex,hourFromIndex,validReadingHour,latestDueHour,nextDueHour,pendingReadings,nodes,sample,volume,gate,turbine,canal,hydraulic,calculate,derive,preview,validate,windowSlots,decodeBackup,idleFlowConfig};
 })();
 
 </script>
@@ -1676,8 +1714,8 @@ window.UHPJ_FORM_DATA={
   const number=(v,d=2)=>finite(v)?v.toLocaleString('pt-BR',{minimumFractionDigits:d,maximumFractionDigits:d}):'—';
   const escape=value=>String(value).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
   const stamp=hour=>`${hour.slice(8,10)}/${hour.slice(5,7)}/${hour.slice(0,4)} ${hour.slice(11,16)}`;
-  function nowHour(){const date=new Date(),pad=n=>String(n).padStart(2,'0');return `${date.getFullYear()}-${pad(date.getMonth()+1)}-${pad(date.getDate())}T${pad(date.getHours())}:00`;}
-  const state={records:[],calculated:[],editing:null,historyEnd:nowHour(),span:48,selectedHour:null,storageError:null};
+  const nowHour=()=>model.latestDueHour();
+  const state={records:[],calculated:[],editing:null,historyEnd:nowHour(),followNow:true,span:48,selectedHour:null,storageError:null,dueIndex:null,promptedIndex:null,promptHour:null};
   try{const saved=localStorage.getItem(storageKey);if(saved)state.records=model.decodeBackup(JSON.parse(saved));}catch(error){state.storageError=error.message;$('formStorageNotice').hidden=false;$('formStorageNotice').textContent='Não foi possível carregar os registros locais: '+error.message+'. O conteúdo anterior foi preservado.';}
   try{const saved=localStorage.getItem(settingsKey);if(saved)data.rules.idleFlow=model.idleFlowConfig(JSON.parse(saved).idleFlow);}catch(error){$('formIdleStatus').textContent='Configuração não carregada: '+error.message;}
   $('formGates').innerHTML=Array.from({length:6},(_,i)=>`<div><label for="formOpening${i}">C${i+1}</label><input type="text" inputmode="decimal" data-decimal-mask pattern="[0-9]+,[0-9]{2}" id="formOpening${i}" value="0,00" required aria-describedby="formOpeningHint"><label class="form-full-label" for="formFull${i}"><input type="checkbox" id="formFull${i}">Ab. Total</label></div>`).join('');
@@ -1729,7 +1767,7 @@ window.UHPJ_FORM_DATA={
   }
   function renderDraft(){
     const input=readInput(),result=model.preview(input,state.records,bases,data),index=model.hourIndex(input.hour);
-    $('formPeriod').textContent=index===null?'Selecione uma hora cheia.':`${stamp(model.hourFromIndex(index-1))} → ${stamp(input.hour)}`;
+    $('formPeriod').textContent=index===null?'Selecione um horário da agenda.':`${stamp(model.hourFromIndex(index-1))} → ${stamp(input.hour)} · 1h operacional`;
     const map={formDefluence:result.defluence,formAffluence:result.affluence,formReference:result.reference,formSpillTotal:result.spillTotal,formTurbineTotal:result.turbineTotal,formHead:result.head,formAccumulation:result.accumulation,formNonTurbinable:result.nonTurbinable,formTailraceFlow:result.canal.value,formSanitary:result.sanitaryReference};
     for(const [id,value] of Object.entries(map))$(id).textContent=number(value);
     $('formVolume').textContent=number(result.currentVolume.value,3);
@@ -1742,8 +1780,8 @@ window.UHPJ_FORM_DATA={
     $('formPowerTotal').textContent=number(result.powers.every(finite)?result.powers.reduce((s,p)=>s+p,0):null);
     $('formNonTurbReason').textContent=`${result.nonTurbReason||'Selecione o indexador'} · mínimo entre vertida e referência sanitária`;
     $('formSanitaryMonth').textContent=index===null?'':`${data.months[Number(input.hour.slice(5,7))-1]} · Vol 2, página 7`;
-    $('formCalculationSubtitle').textContent=index===null?'Resultados atualizados ao alterar os campos':`${stamp(input.hour)} · energia da hora / 1h · interpolação linear entre pontos válidos`;
-    const valid=model.validate(input).length===0;
+    $('formCalculationSubtitle').textContent=index===null?'Resultados atualizados ao alterar os campos':`${stamp(input.hour)} · energia / 1h operacional · interpolação linear entre pontos válidos`;
+    const valid=model.validate(input,{allowLegacyHour:state.editing===input.hour}).length===0;
     $('formDraftStatus').textContent=!valid?'Preencha os campos manuais para registrar a leitura.':result.complete?'Cálculos disponíveis. Pronto para salvar.':'Leitura pode ser salva com os cálculos disponíveis. Consulte as pendências abaixo.';
     const detailLines=[...result.gates.map((g,i)=>`C${i+1}: ${origin(g)}`),...result.units.map((u,i)=>`UG${i+1}: ${origin(u)}`),`Volume: ${origin(result.currentVolume)}`,`Curva de jusante: ${origin(result.canal)}`];
     $('formDetails').innerHTML=`<ul>${detailLines.map(line=>`<li>${escape(line)}</li>`).join('')}</ul>${result.issues.length?`<ul class="form-pending">${result.issues.map(line=>`<li>${escape(line)}</li>`).join('')}</ul>`:''}`;
@@ -1753,20 +1791,61 @@ window.UHPJ_FORM_DATA={
     if(state.storageError)throw new Error('Há um problema no armazenamento local; restaure um backup válido antes de gravar.');
     localStorage.setItem(storageKey,JSON.stringify({schema:1,records}));state.records=records;
   }
-  function rebuild(){state.calculated=model.derive(state.records,bases,data);renderHistory();renderCharts();renderDraft();}
+  function refreshReminder(){
+    const pending=model.pendingReadings(state.calculated),latest=pending.at(-1),next=stamp(model.nextDueHour());
+    $('formReadingReminder').hidden=!latest;
+    $('formReminderTitle').textContent=latest?'Leitura pendente · '+stamp(latest.hour):'Leituras em dia';
+    $('formReminderSummary').textContent=`${pending.length} ${pending.length===1?'horário sem leitura':'horários sem leitura'} nas últimas 48h. Preencha os valores do Balanço Hídrico.`;
+    $('formReminderNext').textContent='Próxima leitura: '+next+' · avisos com o aplicativo aberto';
+    $('formScheduleNext').textContent='Próxima leitura: '+next;
+    $('formFillPending').dataset.hour=latest?.hour||'';
+    const due=nowHour(),saved=state.records.some(record=>model.hourIndex(record.hour)===model.hourIndex(due));
+    if(saved&&state.promptHour===due){state.promptHour=null;if($('formReadingDialog').open)$('formReadingDialog').close();}
+  }
+  function tickSchedule(){
+    const due=nowHour(),index=model.hourIndex(due);
+    if(index!==state.dueIndex){
+      if($('formReadingDialog').open)$('formReadingDialog').close();
+      state.dueIndex=index;state.promptHour=state.records.some(record=>model.hourIndex(record.hour)===index)?null:due;
+      if(state.followNow){state.historyEnd=due;state.selectedHour=null;renderHistory();renderCharts();}
+      refreshReminder();
+    }
+    if(state.promptHour&&state.promptedIndex!==index&&!document.hidden&&!document.querySelector('dialog[open]')){
+      $('formReadingMessage').textContent='Registre a leitura do Balanço Hídrico de '+stamp(state.promptHour)+'. A linha permanece amarela no histórico até ser salva.';
+      $('formReadingDialog').showModal();state.promptedIndex=index;
+    }
+  }
+  function rebuild(){state.calculated=model.derive(state.records,bases,data);renderHistory();renderCharts();renderDraft();refreshReminder();}
   $('hourlyInput').addEventListener('input',renderDraft);
   $('hourlyInput').addEventListener('change',()=>{for(let i=0;i<6;i++)$('formOpening'+i).disabled=$('formFull'+i).checked;renderDraft();});
   $('hourlyInput').addEventListener('submit',event=>{
-    event.preventDefault();const input=readInput(),errors=model.validate(input);
+    event.preventDefault();const input=readInput(),errors=model.validate(input,{allowLegacyHour:state.editing===input.hour});
     if(errors.length){message(errors.join(' '),true);return;}
-    if(state.records.some(record=>record.hour===input.hour)&&state.editing!==input.hour){message('Já existe uma leitura nesta hora. Use Editar no histórico para corrigir o registro.',true);return;}
+    if(model.hourIndex(input.hour)>model.hourIndex(nowHour())){message('Este horário ainda não venceu. Aguarde o horário da leitura para salvar.',true);return;}
+    if(state.records.some(record=>model.hourIndex(record.hour)===model.hourIndex(input.hour))&&state.editing!==input.hour){message('Já existe uma leitura nesta hora operacional. Use Editar no histórico para corrigir o registro.',true);return;}
     const records=[...state.records.filter(record=>record.hour!==input.hour),input].sort((a,b)=>a.hour.localeCompare(b.hour));
     try{persist(records);}catch(error){message('Leitura não salva: '+error.message,true);return;}
-    state.editing=input.hour;state.historyEnd=input.hour;$('formHistoryEnd').value=input.hour;$('formHour').disabled=true;
+    state.editing=input.hour;state.historyEnd=state.followNow?nowHour():input.hour;$('formHistoryEnd').value=state.historyEnd;$('formHour').disabled=true;
     $('formEditingLabel').textContent='Leitura salva · '+stamp(input.hour);$('formSave').textContent='Atualizar leitura';
     rebuild();message('Leitura salva neste navegador. Histórico e gráficos recalculados.');
   });
-  $('formNew').addEventListener('click',()=>{state.editing=null;$('hourlyInput').reset();maskedFields.forEach(field=>field.setCustomValidity(''));$('formHour').disabled=false;$('formHour').value=nowHour();for(let i=0;i<6;i++)$('formOpening'+i).disabled=false;$('formEditingLabel').textContent='Nova leitura';$('formSave').textContent='Salvar leitura horária';message('');renderDraft();});
+  function newReading(hour=nowHour()){
+    const existing=state.records.find(record=>model.hourIndex(record.hour)===model.hourIndex(hour));
+    if(existing){edit(existing.hour);return;}
+    state.editing=null;$('hourlyInput').reset();maskedFields.forEach(field=>{field.value='';field.setCustomValidity('');});
+    $('formHour').disabled=false;$('formHour').value=hour;for(let i=0;i<6;i++)$('formOpening'+i).disabled=false;
+    $('formEditingLabel').textContent='Leitura pendente · '+stamp(hour);$('formSave').textContent='Salvar leitura horária';message('');renderDraft();
+  }
+  function fillPending(hour){
+    if(!hour)return;
+    if($('formReadingDialog').open)$('formReadingDialog').close();
+    $('formNav').click();newReading(hour);$('hourlyInput').scrollIntoView({block:'start',behavior:'smooth'});$('formMontante').focus({preventScroll:true});
+  }
+  $('formNew').addEventListener('click',()=>newReading());
+  $('formFillPending').addEventListener('click',()=>fillPending($('formFillPending').dataset.hour));
+  $('formReadingFill').addEventListener('click',()=>fillPending(state.promptHour));
+  ['formReadingLater','closeReadingDialog'].forEach(id=>$(id).addEventListener('click',()=>$('formReadingDialog').close()));
+  $('formViewPending').addEventListener('click',()=>{$('formNav').click();state.followNow=true;state.historyEnd=nowHour();state.selectedHour=null;renderHistory();renderCharts();$('formHistory').scrollIntoView({block:'start',behavior:'smooth'});});
   function edit(hour){
     const input=state.records.find(record=>record.hour===hour);if(!input)return;
     state.editing=hour;maskedFields.forEach(field=>field.setCustomValidity(''));$('formHour').value=hour;$('formHour').disabled=true;$('formMontante').value=decimalText(input.montante);$('formJusante').value=decimalText(input.jusante);
@@ -1775,19 +1854,22 @@ window.UHPJ_FORM_DATA={
     $('formIndex').value=input.index;$('formEditingLabel').textContent='Editando · '+stamp(hour);$('formSave').textContent='Atualizar leitura';message('');renderDraft();$('hourlyInput').scrollIntoView({block:'start',behavior:'smooth'});
   }
   function renderHistory(){
-    const slots=model.windowSlots(state.calculated,state.historyEnd,48),rows=slots.filter(slot=>slot.result).reverse();
+    const slots=model.windowSlots(state.calculated,state.historyEnd,48),due=model.hourIndex(nowHour()),rows=slots.filter(slot=>slot.result||model.hourIndex(slot.hour)<=due).reverse();
+    const recorded=rows.filter(slot=>slot.result).length,pending=rows.length-recorded;
     $('formHistoryEnd').value=state.historyEnd;
     $('formHistorySubtitle').textContent=slots.length?`${stamp(slots[0].hour)} a ${stamp(slots.at(-1).hour)}`:'Selecione uma hora válida para consultar.';
-    $('formHistoryCount').textContent=`${rows.length} leituras em 48 horários · ${state.records.length} registros no navegador`;
+    $('formHistoryCount').textContent=`${recorded} leituras salvas · ${pending} pendentes em amarelo · ${state.records.length} registros no navegador`;
     $('formHistoryEmpty').hidden=rows.length>0;
-    $('formHistoryBody').innerHTML=rows.map(({result:r})=>{
+    $('formHistoryBody').innerHTML=rows.map(({hour,result:r})=>{
+      if(!r)return `<tr class="form-reading-pending" data-pending-hour="${hour}"><td>${stamp(hour)}<span class="form-reading-label">Leitura pendente</span></td><td colspan="17">Aguardando os valores do operador. Nenhuma medição registrada.</td><td><button type="button" class="row-button" data-fill-reading="${hour}">Preencher</button></td></tr>`;
       const input=r.input,energy=i=>`${number(input.energy[i])} <span class="form-machine-label">${input.states[i]}</span>`;
       return `<tr class="${input.hour===state.editing?'selected':''}"><td>${stamp(input.hour)}${r.complete?'':'<span class="form-partial-mark">Dados parciais</span>'}</td><td>${number(input.montante)}</td><td>${number(input.jusante)}</td><td>${energy(0)}</td><td>${energy(1)}</td><td>${input.openings.map(h=>h==='full'?'Total':number(h)).join(' · ')}</td><td title="${escape(r.nonTurbReason||'')}">${input.index}</td><td>${number(r.head)}</td><td>${number(r.spillTotal)}</td><td>${number(r.turbineTotal)}</td><td>${number(r.defluence)}</td><td>${number(r.accumulation)}</td><td>${number(r.affluence)}</td><td>${number(r.reference)}</td><td><span class="form-hyd-badge ${r.hydraulic.code}">${r.hydraulic.label}</span></td><td>${number(r.currentVolume.value,3)}</td><td>${number(r.sanitaryReference)}</td><td>${number(r.nonTurbinable)}</td><td><button type="button" class="row-button" data-edit-reading="${input.hour}">Editar</button></td></tr>`;
     }).join('');
     $('formHistoryBody').querySelectorAll('[data-edit-reading]').forEach(button=>button.addEventListener('click',()=>edit(button.dataset.editReading)));
+    $('formHistoryBody').querySelectorAll('[data-fill-reading]').forEach(button=>button.addEventListener('click',()=>fillPending(button.dataset.fillReading)));
   }
-  $('formHistoryEnd').addEventListener('change',()=>{if(model.hourIndex($('formHistoryEnd').value)===null){message('Use uma hora cheia para a janela do histórico.',true);return;}state.historyEnd=$('formHistoryEnd').value;state.selectedHour=null;renderHistory();renderCharts();});
-  $('formHistoryNow').addEventListener('click',()=>{state.historyEnd=nowHour();state.selectedHour=null;renderHistory();renderCharts();});
+  $('formHistoryEnd').addEventListener('change',()=>{if(!model.validReadingHour($('formHistoryEnd').value)){message('Use 01:00 a 23:00, ou 23:59 para a janela do histórico.',true);return;}state.followNow=false;state.historyEnd=$('formHistoryEnd').value;state.selectedHour=null;renderHistory();renderCharts();});
+  $('formHistoryNow').addEventListener('click',()=>{state.followNow=true;state.historyEnd=nowHour();state.selectedHour=null;renderHistory();renderCharts();});
   document.querySelectorAll('.form-shortcuts a').forEach(link=>link.addEventListener('click',event=>{event.preventDefault();$(link.getAttribute('href').slice(1)).scrollIntoView({block:'start',behavior:'smooth'});}));
   const series=[{key:'level',label:'Nível do reservatório',color:'#2355f5',axis:'level',value:r=>r.input.montante},{key:'affluence',label:'Afluência',color:'#e0393f',value:r=>r.affluence},{key:'reference',label:'Afl. Ref. · média 4h',color:'#288648',value:r=>r.reference},{key:'defluence',label:'Defluência',color:'#20272b',value:r=>r.defluence},{key:'turbine',label:'Turbinada total',color:'#c9ad00',value:r=>r.turbineTotal},{key:'ug1',label:'Turbinada UG1',color:'#287b95',value:r=>r.units[0].value},{key:'ug2',label:'Turbinada UG2',color:'#885ab6',value:r=>r.units[1].value},{key:'spill',label:'Vazão vertida',color:'#8a9498',value:r=>r.spillTotal}];
   const visible=new Set(series.map(item=>item.key));
@@ -1824,7 +1906,7 @@ window.UHPJ_FORM_DATA={
     return `<svg viewBox="0 0 ${width} ${height}" role="group" aria-label="${label}">${grid}${lines}${selection}${hits}<text x="${left}" y="12">Vazão · m³/s</text>${levels.length?`<text x="${width-right}" y="12" text-anchor="end">Cota · m</text>`:''}</svg>`;
   }
   function inspect(hour){
-    state.selectedHour=hour;const r=state.calculated.find(result=>result.input.hour===hour);
+    state.selectedHour=hour;const r=state.calculated.find(result=>model.hourIndex(result.input.hour)===model.hourIndex(hour));
     $('formChartInspection').innerHTML=r?`<strong>${stamp(hour)}</strong> · Nível ${number(r.input.montante)} m · Afl. ${number(r.affluence)} · Afl. Ref. ${number(r.reference)} · Defl. ${number(r.defluence)} · Turbinada total ${number(r.turbineTotal)} · UG1 ${number(r.units[0].value)} · UG2 ${number(r.units[1].value)} · Vertida ${number(r.spillTotal)} m³/s`:`<strong>${stamp(hour)}</strong> · Sem leitura salva nesta hora.`;
     renderCharts();
   }
@@ -1849,9 +1931,9 @@ window.UHPJ_FORM_DATA={
     const file=event.target.files[0];if(!file)return;
     try{
       if(file.size>10*1024*1024)throw new Error('Arquivo maior que 10 MB.');
-      const backup=JSON.parse(await file.text()),imported=model.decodeBackup(backup),existing=new Set(state.records.map(record=>record.hour));
+      const backup=JSON.parse(await file.text()),imported=model.decodeBackup(backup),existing=new Set(state.records.map(record=>model.hourIndex(record.hour)));
       const importedIdle=backup.rules?.idleFlow===undefined?null:model.idleFlowConfig(backup.rules.idleFlow);
-      const added=imported.filter(record=>!existing.has(record.hour)),records=[...state.records,...added].sort((a,b)=>a.hour.localeCompare(b.hour));
+      const added=imported.filter(record=>!existing.has(model.hourIndex(record.hour))),records=[...state.records,...added].sort((a,b)=>a.hour.localeCompare(b.hour));
       const oldError=state.storageError;state.storageError=null;
       try{persist(records);}catch(error){state.storageError=oldError;throw error;}
       let settingsMessage='';
@@ -1868,6 +1950,15 @@ window.UHPJ_FORM_DATA={
   $('formSanitaryTable').innerHTML=data.months.map((month,i)=>`<tr><td>${month}</td><td>${number(data.sanitaryReference[i])}</td></tr>`).join('');
   renderIdleSettings();
   rebuild();
+  tickSchedule();
+  setInterval(tickSchedule,1000);
+  document.addEventListener('visibilitychange',tickSchedule);
+  window.addEventListener('focus',tickSchedule);
+  window.addEventListener('pageshow',tickSchedule);
+  window.addEventListener('storage',event=>{
+    if(event.key!==storageKey)return;
+    try{state.records=event.newValue?model.decodeBackup(JSON.parse(event.newValue)):[];rebuild();}catch(error){message('Não foi possível atualizar as leituras de outra aba: '+error.message,true);}
+  });
 })();
 
 </script>
