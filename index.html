@@ -484,6 +484,52 @@ body .retro-start-items .retro-menu-help { margin-top: 6px; border-top: 1px soli
 ::-webkit-scrollbar-track { background: repeating-conic-gradient(#c0c0c0 0% 25%, #dfdfdf 0% 50%) 0/2px 2px; }
 ::-webkit-scrollbar-thumb { background: #c0c0c0; border: 1px solid; border-color: #fff #404040 #404040 #fff; box-shadow: var(--retro-raised); }
 ::-webkit-scrollbar-corner { background: #c0c0c0; }
+.operating-range-panel { margin-bottom: 16px; }
+.operating-range-heading { display: flex; justify-content: space-between; align-items: center; gap: 14px; padding: 12px 16px 0; }
+.operating-range-heading h2 { font-size: 13px; font-weight: 700; margin: 0 0 4px; }
+.operating-range-heading p { color: #333; font-size: 11px; margin: 0; }
+.operating-range-maximum { display: flex; align-items: center; justify-content: space-between; gap: 18px; padding: 7px 12px; background: #ffffe1; border: 2px solid; border-color: #808080 #fff #fff #808080; box-shadow: inset 1px 1px #404040; flex-shrink: 0; }
+.operating-range-maximum>span { font-size: 9px; font-weight: 700; max-width: 120px; }
+.operating-range-maximum strong { color: #000; font-size: 28px; line-height: 1.2; font-weight: 700; white-space: nowrap; }
+.operating-range-maximum small { font-size: 11px; font-weight: 400; color: #333; }
+.operating-range-body { padding: 6px 16px 11px; }
+.operating-range-graphic { position: relative; padding-top: 12px; }
+.operating-range-track { display: flex; height: 31px; border: 2px solid; border-color: #808080 #fff #fff #808080; box-shadow: inset 1px 1px #404040; padding: 2px; background: #fff; gap: 2px; }
+.operating-range-point { flex: 1; min-width: 0; background: #a0a0a0; border-top: 1px solid #fff7; border-bottom: 1px solid #0005; }
+.operating-range-point.permitted { background: #008000; }
+.operating-range-point.prohibited { background: repeating-linear-gradient(135deg, #b00000 0 4px, #c22 4px 6px); }
+.operating-range-point.unclassified { background: #a0a0a0; }
+.operating-range-point.unavailable { background: repeating-linear-gradient(135deg, #dfdfdf 0 3px, #808080 3px 4px); }
+.operating-range-marker { position: absolute; top: 9px; height: 37px; width: 3px; margin-left: -1px; z-index: 1; background: #000080; box-shadow: -1px 0 #fff, 1px 0 #fff; pointer-events: none; }
+.operating-range-marker::before { content: ""; position: absolute; left: -4px; top: -7px; border: 5px solid transparent; border-top: 7px solid #000080; border-bottom: 0; }
+.operating-range-axis { position: relative; height: 23px; color: #333; font-size: 10px; margin: 0 4px; }
+.operating-range-axis span { position: absolute; top: 3px; transform: translateX(-50%); white-space: nowrap; }
+.operating-range-axis span:first-child { transform: none; }
+.operating-range-axis span:last-child { transform: translateX(-100%); }
+.operating-range-footer { display: flex; align-items: center; justify-content: space-between; gap: 7px 16px; flex-wrap: wrap; }
+.operating-range-legend { display: flex; gap: 6px 13px; flex-wrap: wrap; }
+.operating-range-legend>span { display: flex; align-items: center; gap: 5px; color: #333; font-size: 10px; }
+.range-key { display: inline-block; width: 12px; height: 10px; border: 1px solid #404040; flex-shrink: 0; }
+.range-key.permitted { background: #008000; }
+.range-key.prohibited { background: repeating-linear-gradient(135deg, #b00000 0 3px, #c22 3px 5px); }
+.range-key.unclassified { background: #a0a0a0; }
+.range-key.unavailable { background: repeating-linear-gradient(135deg, #dfdfdf 0 3px, #808080 3px 4px); }
+.range-key.selected { width: 3px; margin-inline: 4px 5px; border: 0; background: #000080; }
+#operatingRangeSummary { color: #005500; font-size: 11px; font-weight: 700; }
+.operating-range-note { color: #444; font-size: 10px; margin: 6px 0 0; }
+.range-empty #operatingRangeSummary { color: #800000; }
+.range-empty .operating-range-maximum { background: #dfdfdf; }
+@media (max-width: 760px) {
+  .operating-range-heading { padding: 11px 12px 0; flex-wrap: wrap; gap: 10px; }
+  .operating-range-heading h2 { font-size: 12px; }
+  .operating-range-heading p { font-size: 10px; }
+  .operating-range-maximum { flex: 1; gap: 12px; padding: 5px 9px; }
+  .operating-range-maximum>span { max-width: none; }
+  .operating-range-maximum strong { font-size: 25px; }
+  .operating-range-body { padding: 6px 12px 10px; }
+  .operating-range-track { gap: 1px; }
+  .operating-range-legend { gap: 5px 10px; }
+}
 @media (max-width: 1250px) {
   .retro-window { grid-template-columns: 190px minmax(0, 1fr); }
   .rail { padding: 7px; }
@@ -645,6 +691,10 @@ body .retro-start-items .retro-menu-help { margin-top: 6px; border-top: 1px soli
         <div class="control-head"><label for="headSelect">Queda bruta <span>m</span></label><div class="head-picker"><button id="headDown" aria-label="Queda bruta anterior">−</button><select id="headSelect"></select><button id="headUp" aria-label="Próxima queda bruta">+</button></div><small id="headCoverage"></small></div>
         <div class="control-load"><label for="loadSelect">Carga consultada <span>MW</span></label><select id="loadSelect"></select><small>Selecione uma carga ou clique no gráfico</small></div>
         <div class="control-symbol" aria-hidden="true"><svg viewBox="0 0 92 74"><path d="M4 56h80M4 63h80M15 17h20v35h17V31h20v21h12M20 12h10M57 26h10"/><path d="M43 5v20m-5-5 5 5 5-5"/></svg></div>
+      </section>
+      <section class="panel operating-range-panel" id="operatingRangePanel" aria-labelledby="operatingRangeTitle">
+        <div class="operating-range-heading"><div><h2 id="operatingRangeTitle">Faixa operativa permitida</h2><p id="operatingRangeContext"></p></div><div class="operating-range-maximum" aria-live="polite" aria-atomic="true"><span>CARGA MÁXIMA PERMITIDA</span><strong><span id="operatingRangeMaximum">—</span><small id="operatingRangeUnit"> MW</small></strong></div></div>
+        <div class="operating-range-body"><div class="operating-range-graphic" id="operatingRangeGraphic" role="img"><div class="operating-range-marker" id="operatingRangeMarker" aria-hidden="true"></div><div class="operating-range-track" id="operatingRangeTrack" aria-hidden="true"></div><div class="operating-range-axis" id="operatingRangeAxis" aria-hidden="true"></div></div><div class="operating-range-footer"><div class="operating-range-legend"><span><i class="range-key permitted"></i>Permitida</span><span><i class="range-key prohibited"></i>Proibida</span><span><i class="range-key unclassified"></i>Sem classificação</span><span><i class="range-key unavailable"></i>Sem vazão disponível</span><span><i class="range-key selected"></i>Carga consultada</span></div><strong id="operatingRangeSummary"></strong></div><p class="operating-range-note">Cada bloco representa uma carga tabelada em MW. Não há interpolação entre os blocos.</p></div>
       </section>
       <section class="result-grid" aria-live="polite" aria-atomic="true">
         <article class="metric metric-flow"><div class="metric-label">VAZÃO TURBINADA <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3C9 8 5 11 5 15a7 7 0 0 0 14 0c0-4-4-7-7-12Z"/></svg></div><div class="metric-value"><span id="flowValue">—</span><span class="unit">m³/s</span></div><p id="flowContext"></p></article>
@@ -837,7 +887,27 @@ window.UHPJ_DATA = {"source":"UHPJ_Faixas Permitida e Proibida de operação UG1
     $('chartSubtitle').textContent=`${state.unit} · queda bruta de ${number(row.head)} m`;
     $('chartFooter').textContent=allowed.length?'Clique em um ponto para consultar':'Sem pontos permitidos com vazão positiva';
     $('tableSubtitle').textContent=`${state.unit} · ${number(row.head)} m de queda bruta`;
-    renderBands(row);renderChart(row,result);renderTable(row);
+    renderOperatingRange(row,load);renderBands(row);renderChart(row,result);renderTable(row);
+  }
+  function renderOperatingRange(row,load){
+    const groups=model.groups(data,row,'permitted'),allowed=model.allowedIndices(data,row);
+    const maximum=allowed.length?data.loads[allowed.at(-1)].mw:null;
+    const rangeSummary=groups.length?`Permitidas: ${groups.map(g=>rangeText(g)+' MW').join(' / ')}`:'Nenhuma carga permitida com vazão positiva';
+    $('operatingRangeContext').textContent=`${state.unit} · QB ${number(row.head)} m · carga consultada: ${power(load)} MW`;
+    $('operatingRangeMaximum').textContent=maximum===null?'—':power(maximum);
+    $('operatingRangeUnit').hidden=maximum===null;
+    $('operatingRangeSummary').textContent=rangeSummary;
+    $('operatingRangePanel').classList.toggle('range-empty',maximum===null);
+    $('operatingRangeTrack').innerHTML=row.points.map((p,i)=>{
+      const available=Number.isFinite(p.q)&&p.q>0;
+      const status=p.status==='prohibited'?'prohibited':available?p.status:'unavailable';
+      const description=(status==='unavailable'?'Sem vazão disponível':labels[status])+(!available&&status==='prohibited'?' · sem vazão disponível':'');
+      return `<span class="operating-range-point ${status}" title="${power(data.loads[i].mw)} MW · ${description}"></span>`;
+    }).join('');
+    const tickIndices=data.loads.flatMap((l,i)=>i===0||i===data.loads.length-1||i<data.loads.length-3&&Number.isInteger(l.mw)&&l.mw%5===0?[i]:[]);
+    $('operatingRangeAxis').innerHTML=tickIndices.map(i=>`<span style="left:${(i+.5)/data.loads.length*100}%">${power(data.loads[i].mw)}</span>`).join('');
+    $('operatingRangeMarker').style.left=`${(state.loadIndex+.5)/data.loads.length*100}%`;
+    $('operatingRangeGraphic').setAttribute('aria-label',`${state.unit}, queda bruta ${number(row.head)} metros. ${rangeSummary}. ${maximum===null?'Máxima permitida indisponível.':`Carga máxima permitida: ${power(maximum)} MW.`} Carga consultada: ${power(load)} MW. Cada bloco representa um ponto tabelado, sem interpolação.`);
   }
   function renderBands(row){
     $('bands').innerHTML=['permitted','prohibited','unclassified'].flatMap(status=>{
