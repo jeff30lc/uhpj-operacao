@@ -64,6 +64,9 @@
 .form-reading-reminder strong{display:block;font-size:13px}.form-reading-reminder p{margin:5px 0;font-size:11px}.form-reading-reminder small{font-size:10px}
 .form-reading-actions{display:flex;gap:8px;flex-wrap:wrap;flex-shrink:0}.form-schedule-info{font-size:11px;margin:0 0 16px;color:#554a20}
 .form-reading-label{display:block;font-size:10px;font-weight:700;margin-top:3px}.form-reading-note{font-size:11px}
+.form-history .table-scroll{position:relative;isolation:isolate}
+.form-history thead{z-index:3}
+.form-history thead th{background:#f7f9fa}
 body .form-history tbody tr.form-reading-pending>td{background:#fff49a;color:#382e07}
 #formReadingDialog{max-width:540px}#formReadingDialog>p{line-height:1.7}#formReadingDialog .form-reading-actions{margin-top:20px}
 @media(max-width:760px){.form-reading-reminder{align-items:flex-start;flex-direction:column}.form-reading-actions{width:100%}.form-reading-actions button{flex:1}.form-reading-reminder strong{font-size:12px}}
@@ -422,6 +425,7 @@ body .form-history-controls input { height: 30px; font-size: 11px; }
 .form-history-toolbar>span { color: #333; }
 body .form-history-toolbar button { font-size: 11px; padding: 5px 9px; }
 .form-history td:first-child, .form-history th:first-child, .form-history td:last-child, .form-history th:last-child { background: #c0c0c0; color: #000; border-color: #808080; }
+body .form-history thead th { background: #c0c0c0; }
 .form-machine-label { color: #444; }
 .form-history tbody tr.selected td:not(:first-child):not(:last-child),
 .form-history tbody tr.selected .form-machine-label { color: #fff; }
